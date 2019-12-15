@@ -1,7 +1,7 @@
 package pl.coderslab.projectwybankuj.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import pl.coderslab.projectwybankuj.entity.Bank;
 
-public interface BankRepository extends JpaRepository<Bank, Long> {
+public interface BankRepository extends CrudRepository<Bank, Long> {
 }

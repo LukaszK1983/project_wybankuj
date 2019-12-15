@@ -1,7 +1,10 @@
 package pl.coderslab.projectwybankuj.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "mortgages")
@@ -14,33 +17,45 @@ public class Mortgage {
     @NotEmpty
     private String offer;
 
-    @NotEmpty
+    @NotNull
+    @DecimalMin(value = "0.1")
     private double creditRate;
 
-    @NotEmpty
+    @NotNull
+    @DecimalMin(value = "0.0")
     private double serviceCharge;
 
+    @NotNull
+    @DecimalMin(value = "0.0")
     private double insurance;
 
-    @NotEmpty
+    @NotNull
+    @DecimalMin(value = "0.0")
     private double contributionPercent;
 
-    @NotEmpty
+    @NotNull
+    @Min(1)
     private int minCreditAmount;
 
-    @NotEmpty
+    @NotNull
+    @Min(2)
     private int maxCreditAmount;
 
-    @NotEmpty
+    @NotNull
+    @Min(18)
     private int minBorrowerAge;
 
-    @NotEmpty
+    @NotNull
+    @Min(19)
     private int maxBorrowerAge;
 
-    @NotEmpty
+    @NotNull
+    @Min(1)
     private int maxCreditPeriod;
 
     @ManyToOne
+    @JoinColumn(name = "bank_id")
+    @NotNull
     private Bank bank;
 
     public Long getId() {

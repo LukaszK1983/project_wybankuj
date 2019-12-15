@@ -3,6 +3,8 @@ package pl.coderslab.projectwybankuj.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "banks")
@@ -17,6 +19,15 @@ public class Bank {
     private String bankName;
 
     private String logo;
+
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
+    private List<Agency> agencies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
+    private List<Loan> loans = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
+    private List<Mortgage> mortgages = new ArrayList<>();
 
     public Bank() {
     }
@@ -48,5 +59,29 @@ public class Bank {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public List<Agency> getAgencies() {
+        return agencies;
+    }
+
+    public void setAgencies(List<Agency> agencies) {
+        this.agencies = agencies;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+
+    public List<Mortgage> getMortgages() {
+        return mortgages;
+    }
+
+    public void setMortgages(List<Mortgage> mortgages) {
+        this.mortgages = mortgages;
     }
 }

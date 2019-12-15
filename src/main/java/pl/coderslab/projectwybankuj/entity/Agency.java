@@ -1,9 +1,7 @@
 package pl.coderslab.projectwybankuj.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "agencies")
@@ -33,16 +31,19 @@ public class Agency {
     private String city;
 
     @NotEmpty
-    @Size(min = 9, max = 9)
+    @Pattern(regexp = "\\d{9}")
     private String phone;
 
     @NotEmpty
     @Email
     private String email;
 
+    @NotEmpty
     private String hours;
 
     @ManyToOne
+    @JoinColumn(name = "bank_id")
+    @NotNull
     private Bank bank;
 
     public Long getId() {
