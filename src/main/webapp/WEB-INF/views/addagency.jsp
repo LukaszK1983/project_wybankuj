@@ -22,7 +22,7 @@
             <tr><td>Telefon: </td><td><form:input path="phone" /></td><td><form:errors path="phone" cssClass="error" /></td></tr>
             <tr><td>E-mail: </td><td><form:input path="email" /></td><td><form:errors path="email" cssClass="error" /></td></tr>
             <tr><td>Godziny otwarcia: </td><td><form:select path="hours" items="${hours}" /></td><td><form:errors path="hours" cssClass="error" /></td></tr>
-            <tr><td>Bank: </td><td><form:select path="bank" items="${banks}" itemLabel="bankName" itemValue="id" /></td><td><form:errors path="bank" cssClass="error" /><td></tr>
+            <form:hidden path="bank.id" value="${bank.get().id}"/>
             <tr><td></td><td><input type="submit" value="ZAPISZ"></td></tr>
         </form:form>
     </table>

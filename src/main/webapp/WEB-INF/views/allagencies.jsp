@@ -12,7 +12,7 @@
     <title>Oddziały</title>
 </head>
 <body>
-
+<p><a href="${pageContext.request.contextPath}/bank">Banki</a></p>
     <table cellpadding="10">
         <tr bgcolor="#f5f5dc"><td>Bank</td><td>Nazwa</td><td>Ulica</td><td>Miasto</td><td>Telefon</td><td>E-mail</td><td>Godziny otwarcia</td><td>Akcje</td></tr>
         <c:forEach var="agency" items="${agencies}">
@@ -22,7 +22,7 @@
             <td><a href="${pageContext.request.contextPath}/agency/edit?id=${agency.id}">Edycja</a>
             <a href="${pageContext.request.contextPath}/agency/confirm?id=${agency.id}&bankId=${agency.bank.id}">Usuń</a></td></tr>
         </c:forEach>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a href="${pageContext.request.contextPath}/agency/add">Dodaj nowy</a></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a href="${pageContext.request.contextPath}/agency/add?bankId=${bankId}">Dodaj nowy</a></td></tr>
     </table>
 </body>
 </html>

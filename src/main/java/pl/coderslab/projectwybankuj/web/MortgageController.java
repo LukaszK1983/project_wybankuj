@@ -27,12 +27,14 @@ public class MortgageController {
     @GetMapping
     public String allMortgages(@RequestParam Long bankId, Model model) {
         model.addAttribute("mortgages", mortgageRepository.findAllByBankId(bankId));
+        model.addAttribute("bankId", bankId);
         return "allmortgages";
     }
 
     @GetMapping("/add")
-    public String addInitForm(Model model) {
+    public String addInitForm(@RequestParam Long bankId, Model model) {
         model.addAttribute("mortgage", new Mortgage());
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "addmortgage";
     }
 

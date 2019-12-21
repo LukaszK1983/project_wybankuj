@@ -11,6 +11,10 @@ INSERT INTO agencies (agency_name, city, email, hours, phone, street, street_num
 
 INSERT INTO loans (credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (8.58, 2.0, 70, 100000, 120, 18, 5000, 'Zima', 2.50, 1);
 INSERT INTO loans (credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (9.58, 0.0, 80, 200000, 96, 18, 15000, 'Zimowa', 9.50, 2);
+INSERT INTO loans (credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (7.58, 0.0, 75, 150000, 96, 18, 10000, 'Najlepsza', 6.50, 3);
+INSERT INTO loans (credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (9.68, 1.0, 70, 150000, 84, 18, 10000, 'Jedyna', 5.50, 4);
+INSERT INTO loans (credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (9.88, 0.0, 70, 160000, 120, 18, 20000, 'Wspaniała', 0.0, 5);
+INSERT INTO loans (credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (8.88, 3.0, 70, 160000, 120, 18, 20000, 'Super', 0.0, 2);
 
 INSERT INTO mortgages (contribution_percent, credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (10.0, 3.58, 0.0, 80, 2000000, 360, 18, 50000, 'Zimowa', 0.50, 3);
 INSERT INTO mortgages (contribution_percent, credit_rate, insurance, max_borrower_age, max_credit_amount, max_credit_period, min_borrower_age, min_credit_amount, offer, service_charge, bank_id) VALUES (20.0, 3.78, 0.0, 70, 2000000, 360, 18, 50000, 'Wiosna', 1.50, 4);

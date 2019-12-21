@@ -12,6 +12,7 @@
     <title>Oferty kredytów gotówkowych</title>
 </head>
 <body>
+<p><a href="${pageContext.request.contextPath}/bank">Banki</a></p>
     <table cellpadding="10">
         <tr bgcolor="#f5f5dc"><td>Nazwa</td><td>Oprocentowanie</td><td>Prowizja</td><td>Ubezpieczenie</td><td>Min kwota</td><td>Max kwota</td><td>Min wiek</td><td>Max wiek</td><td>Max okres</td><td>Akcje</td></tr>
         <c:forEach var="loan" items="${loans}">
@@ -19,7 +20,7 @@
             <td><a href="${pageContext.request.contextPath}/loan/edit?id=${loan.id}">Edycja</a>
                 <a href="${pageContext.request.contextPath}/loan/confirm?id=${loan.id}&bankId=${loan.bank.id}">Usuń</a></td></tr>
         </c:forEach>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a href="${pageContext.request.contextPath}/loan/add">Dodaj nową ofertę</a></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><a href="${pageContext.request.contextPath}/loan/add?bankId=${bankId}">Dodaj nową ofertę</a></td></tr>
     </table>
 </body>
 </html>

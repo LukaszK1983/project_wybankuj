@@ -24,7 +24,7 @@
         <tr><td>Min wiek: </td><td><form:input path="minBorrowerAge" /></td><td><form:errors path="minBorrowerAge" cssClass="error" /></td></tr>
         <tr><td>Max wiek: </td><td><form:input path="maxBorrowerAge" /></td><td><form:errors path="maxBorrowerAge" cssClass="error" /></td></tr>
         <tr><td>Max okres: </td><td><form:input path="maxCreditPeriod" /></td><td><form:errors path="maxCreditPeriod" cssClass="error" /></td></tr>
-        <tr><td>Bank: </td><td><form:select path="bank" items="${banks}" itemLabel="bankName" itemValue="id" /></td><td><form:errors path="bank" cssClass="error" /></td></tr>
+        <form:hidden path="bank.id" value="${bank.get().id}"/>
         <tr><td></td><td><input type="submit" value="ZAPISZ" /></td></tr>
     </form:form>
     </table>

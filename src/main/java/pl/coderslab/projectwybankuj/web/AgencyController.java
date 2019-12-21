@@ -28,12 +28,14 @@ public class AgencyController {
     @GetMapping
     public String allAgencies(@RequestParam Long bankId, Model model) {
         model.addAttribute("agencies", agencyRepository.findAllByBankId(bankId));
+        model.addAttribute("bankId", bankId);
         return "allagencies";
     }
 
     @GetMapping("/add")
-    public String addInitForm(Model model) {
+    public String addInitForm(@RequestParam Long bankId, Model model) {
         model.addAttribute("agency", new Agency());
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "addagency";
     }
 

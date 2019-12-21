@@ -11,6 +11,9 @@
     <title>Wybankuj</title>
 </head>
 <body>
-    <h1>WITAJ!</h1>
+    <h3>Witaj!</h3>
+
+    <p><a href="${pageContext.request.contextPath}/loanParameters">Symulacja kredytu gotówkowego</a></p>
+    <p><a href="${pageContext.request.contextPath}/mortgageParameters">Symulacja kredytu hipotecznego</a></p>
 </body>
 </html>
