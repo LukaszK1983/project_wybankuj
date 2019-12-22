@@ -12,6 +12,11 @@
     <title>Banki</title>
 </head>
 <body>
+<form action="<c:url value="/logout"/>" method="post">
+    <input class="fa fa-id-badge" type="submit" value="WYLOGUJ">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
+
     <table cellpadding="10">
         <tr bgcolor="#f5f5dc"><td>Logo</td><td>Nazwa</td><td>Akcje</td></tr>
         <c:forEach var="bank" items="${banks}">
