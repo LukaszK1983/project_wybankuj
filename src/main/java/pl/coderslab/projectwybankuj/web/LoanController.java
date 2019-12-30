@@ -27,7 +27,7 @@ public class LoanController {
     @GetMapping
     public String allLoans(@RequestParam Long bankId, Model model) {
         model.addAttribute("loans", loanRepository.findAllByBankId(bankId));
-        model.addAttribute("bankId", bankId);
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "allloans";
     }
 
@@ -39,8 +39,10 @@ public class LoanController {
     }
 
     @PostMapping("/add")
-    public String addPostForm(@Valid Loan loan, BindingResult bindingResult) {
+    public String addPostForm(@Valid Loan loan, BindingResult bindingResult,
+                              @RequestParam Long bankId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(bankId));
             return "addloan";
         }
         loanRepository.save(loan);
@@ -48,25 +50,21 @@ public class LoanController {
     }
 
     @GetMapping("/edit")
-    public String editInitForm(@RequestParam Long id, Model model) {
+    public String editInitForm(@RequestParam Long id, @RequestParam Long bankId, Model model) {
         model.addAttribute("loan", loanRepository.findById(id));
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "editloan";
     }
 
     @PostMapping("/edit")
-    public String editPostForm(@Valid Loan loan, BindingResult bindingResult) {
+    public String editPostForm(@Valid Loan loan, BindingResult bindingResult,
+                               @RequestParam Long bankId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(bankId));
             return "editloan";
         }
         loanRepository.save(loan);
         return "redirect:/loan?bankId=" + loan.getBank().getId() + "";
-    }
-
-    @GetMapping("/confirm")
-    public String confirmDelete(@RequestParam Long id, @RequestParam Long bankId, Model model) {
-        model.addAttribute("loan", loanRepository.findById(id));
-        model.addAttribute("bank", bankRepository.findById(bankId));
-        return "confirmloan";
     }
 
     @GetMapping("/delete")

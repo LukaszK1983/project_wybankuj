@@ -11,31 +11,31 @@ public class Agency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50, message = "Wprowadzona wartość może mieć od 3 do 50 znaków")
     private String agencyName;
 
     @NotEmpty
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50, message = "Wprowadzona wartość może mieć od 3 do 50 znaków")
     private String street;
 
     @NotEmpty
-    @Size(max = 10)
+    @Size(max = 10, message = "Wprowadzona wartość może mieć maksymalnie 10 znaków")
     private String streetNumber;
 
     @NotEmpty
-    @Pattern(regexp = "^\\d{2}\\-\\d{3}$")
+    @Pattern(regexp = "^\\d{2}-\\d{3}$", message = "Wprowadzona wartość powinna być w formacie np. 00-000")
     private String zipCode;
 
     @NotEmpty
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20, message = "Wprowadzona wartość może mieć od 3 do 20 znaków")
     private String city;
 
     @NotEmpty
-    @Pattern(regexp = "\\d{9}")
+    @Pattern(regexp = "\\d{9}", message = "Wprowadzona wartość powinna być w formacie np. 000000000")
     private String phone;
 
     @NotEmpty
-    @Email
+    @Email(message = "Wprowadzona wartość powinna być w formacie np. mail@mail.pl")
     private String email;
 
     @NotEmpty

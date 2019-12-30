@@ -3,9 +3,11 @@ package pl.coderslab.projectwybankuj.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.projectwybankuj.entity.Bank;
-import pl.coderslab.projectwybankuj.repository.AgencyRepository;
 import pl.coderslab.projectwybankuj.repository.BankRepository;
 
 import javax.validation.Valid;
@@ -15,11 +17,9 @@ import javax.validation.Valid;
 public class BankController {
 
     private final BankRepository bankRepository;
-    private final AgencyRepository agencyRepository;
 
-    public BankController(BankRepository bankRepository, AgencyRepository agencyRepository) {
+    public BankController(BankRepository bankRepository) {
         this.bankRepository = bankRepository;
-        this.agencyRepository = agencyRepository;
     }
 
     @GetMapping
@@ -50,18 +50,14 @@ public class BankController {
     }
 
     @PostMapping("/edit")
-    public String editPostForm(@Valid Bank bank, BindingResult bindingResult) {
+    public String editPostForm(@Valid Bank bank, BindingResult bindingResult,
+                               @RequestParam Long id, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(id));
             return "editbank";
         }
         bankRepository.save(bank);
         return "redirect:/bank";
-    }
-
-    @GetMapping("/confirm")
-    public String confirmDelete(@RequestParam Long id, Model model) {
-        model.addAttribute("bank", bankRepository.findById(id));
-        return "confirmbank";
     }
 
     @GetMapping("/delete")

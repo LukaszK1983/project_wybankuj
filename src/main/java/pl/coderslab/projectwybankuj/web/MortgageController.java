@@ -27,7 +27,7 @@ public class MortgageController {
     @GetMapping
     public String allMortgages(@RequestParam Long bankId, Model model) {
         model.addAttribute("mortgages", mortgageRepository.findAllByBankId(bankId));
-        model.addAttribute("bankId", bankId);
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "allmortgages";
     }
 
@@ -39,8 +39,10 @@ public class MortgageController {
     }
 
     @PostMapping("/add")
-    public String addPostForm(@Valid Mortgage mortgage, BindingResult bindingResult) {
+    public String addPostForm(@Valid Mortgage mortgage, BindingResult bindingResult,
+                              @RequestParam Long bankId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(bankId));
             return "addmortgage";
         }
         mortgageRepository.save(mortgage);
@@ -48,25 +50,21 @@ public class MortgageController {
     }
 
     @GetMapping("/edit")
-    public String editInitForm(@RequestParam Long id, Model model) {
+    public String editInitForm(@RequestParam Long id, @RequestParam Long bankId, Model model) {
         model.addAttribute("mortgage", mortgageRepository.findById(id));
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "editmortgage";
     }
 
     @PostMapping("/edit")
-    public String editPostForm(@Valid Mortgage mortgage, BindingResult bindingResult) {
+    public String editPostForm(@Valid Mortgage mortgage, BindingResult bindingResult,
+                               @RequestParam Long bankId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(bankId));
             return "editmortgage";
         }
         mortgageRepository.save(mortgage);
         return "redirect:/mortgage?bankId=" + mortgage.getBank().getId() + "";
-    }
-
-    @GetMapping("/confirm")
-    public String confirmDelete(@RequestParam Long id, @RequestParam Long bankId, Model model) {
-        model.addAttribute("mortgage", mortgageRepository.findById(id));
-        model.addAttribute("bank", bankRepository.findById(bankId));
-        return "confirmmortgage";
     }
 
     @GetMapping("/delete")

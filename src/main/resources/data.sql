@@ -1,8 +1,8 @@
-INSERT INTO banks (bank_name, logo) VALUES ('PKO BP', 'logo1');
-INSERT INTO banks (bank_name, logo) VALUES ('Pekao SA', 'logo2');
-INSERT INTO banks (bank_name, logo) VALUES ('Millennium', 'logo3');
-INSERT INTO banks (bank_name, logo) VALUES ('mBank', 'logo4');
-INSERT INTO banks (bank_name, logo) VALUES ('BNP', 'logo5');
+INSERT INTO banks (bank_name, logo) VALUES ('PKO BP', 'logopko.jpg');
+INSERT INTO banks (bank_name, logo) VALUES ('Pekao SA', 'logopekao.jpg');
+INSERT INTO banks (bank_name, logo) VALUES ('Millennium', 'logomillennium.jpg');
+INSERT INTO banks (bank_name, logo) VALUES ('mBank', 'logombank.jpg');
+INSERT INTO banks (bank_name, logo) VALUES ('BNP', 'logobnp.jpg');
 
 INSERT INTO agencies (agency_name, city, email, hours, phone, street, street_number, zip_code, bank_id) VALUES ('1 Oddział w Katowicach', 'Katowice', '1kat@pko.pl', '9:00 - 17:00', '322003300', 'Katowicka', '5A', '40-000', 1);
 INSERT INTO agencies (agency_name, city, email, hours, phone, street, street_number, zip_code, bank_id) VALUES ('2 Oddział w Katowicach', 'Katowice', '2kat@pko.pl', '10:00 - 18:00', '322004400', 'Gliwicka', '122', '40-001', 1);

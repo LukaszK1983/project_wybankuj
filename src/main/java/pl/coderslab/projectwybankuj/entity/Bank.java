@@ -15,7 +15,7 @@ public class Bank {
     private Long id;
 
     @NotEmpty
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50, message = "Wprowadzona wartość może mieć od 3 do 50 znaków")
     private String bankName;
 
     private String logo;

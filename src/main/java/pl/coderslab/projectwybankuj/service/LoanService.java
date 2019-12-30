@@ -1,6 +1,7 @@
 package pl.coderslab.projectwybankuj.service;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.projectwybankuj.entity.BigDecimalConverter;
 import pl.coderslab.projectwybankuj.entity.Loan;
 
 import java.util.HashMap;
@@ -13,14 +14,22 @@ import java.util.stream.Collectors;
 @Service
 public class LoanService {
 
+    private final BigDecimalConverter bigDecimalConverter;
+
+    public LoanService(BigDecimalConverter bigDecimalConverter) {
+        this.bigDecimalConverter = bigDecimalConverter;
+    }
+
     public Map<Loan, Double> calculateLoanPayment(List<Loan> loans, int amount, int creditPeriod) {
         Map<Loan, Double> loansWithPayments = new HashMap<>();
 
         for (Loan loan : loans) {
             double rateRatio = 1.0 + (loan.getCreditRate() / 100) / 12;
-//            BigDecimal rateRatio = new BigDecimal(1).add((loan.getCreditRate().divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 2, RoundingMode.CEILING));
+//            BigDecimal rateRatio = bigDecimalConverter.convert(1.0 + (loan.getCreditRate() / 100) / 12, TypeDescriptor.collection(Double.class), BigDecimal.class);
+//            BigDecimal rateRatio = BigDecimal.ONE.add((loan.getCreditRate().divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 2, RoundingMode.CEILING));
             double payment = rounded(amount * Math.pow(rateRatio, creditPeriod) * ((rateRatio - 1) / (Math.pow(rateRatio, creditPeriod) - 1)));
-//            BigDecimal payment = amount.multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(new BigDecimal(1))).divide((rateRatio.pow(creditPeriod)).subtract(new BigDecimal(1))));
+//            BigDecimal payment = (amount.multiply(rateRatio.pow(creditPeriod))).multiply((rateRatio.subtract(BigDecimal.ONE)).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.ONE)));
+//            BigDecimal payment = bigDecimalConverter.convert(paymentToConvert, Double.class, BigDecimal.class);
             loansWithPayments.put(loan, payment);
         }
         loansWithPayments = sortByPayment(loansWithPayments);

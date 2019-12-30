@@ -23,7 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/")
-public class StartController {
+public class HomeController {
 
     private final LoanRepository loanRepository;
     private final LoanService loanService;
@@ -34,7 +34,7 @@ public class StartController {
     private final MortgageRepository mortgageRepository;
     private final MortgageService mortgageService;
 
-    public StartController(LoanRepository loanRepository, LoanService loanService, EmailService emailService, AgencyRepository agencyRepository, BankRepository bankRepository, MortgageRepository mortgageRepository, MortgageService mortgageService) {
+    public HomeController(LoanRepository loanRepository, LoanService loanService, EmailService emailService, AgencyRepository agencyRepository, BankRepository bankRepository, MortgageRepository mortgageRepository, MortgageService mortgageService) {
         this.loanRepository = loanRepository;
         this.loanService = loanService;
         this.emailService = emailService;
@@ -188,30 +188,42 @@ public class StartController {
     }
 
     @GetMapping("/listOfAgencies")
-    public String getAgencies(@RequestParam Long bankId, Model model) {
+    public String getAgencies(@RequestParam Long bankId, @RequestParam int amount,
+                              @RequestParam int creditperiod, Model model) {
         List<Agency> agencies = agencyRepository.findAllByBankId(bankId);
         model.addAttribute("agencies", agencies);
 
         Bank bank = bankRepository.findFirstById(bankId).orElseThrow();
         model.addAttribute("bank", bank);
 
+        model.addAttribute("amount", amount);
+        model.addAttribute("creditperiod", creditperiod);
+
         return "listofagencies";
     }
 
     @PostMapping("/listOfAgencies")
-    public String getAgenciesByCity(@RequestParam Long bankId, @RequestParam String city, Model model) {
+    public String getAgenciesByCity(@RequestParam Long bankId, @RequestParam String city,
+                                    @RequestParam int amount, @RequestParam int creditperiod,
+                                    Model model) {
         List<Agency> agencies = agencyRepository.findAllByBankIdAndCity(bankId, city);
         model.addAttribute("agencies", agencies);
 
         Bank bank = bankRepository.findFirstById(bankId).orElseThrow();
         model.addAttribute("bank", bank);
 
+        model.addAttribute("amount", amount);
+        model.addAttribute("creditperiod", creditperiod);
+
         return "listofagencies";
     }
 
     @GetMapping("/agencyContactForm")
-    public String agencyContactForm(@RequestParam Long agencyId, Model model) {
+    public String agencyContactForm(@RequestParam Long agencyId, @RequestParam int amount,
+                                    @RequestParam int creditperiod, Model model) {
         model.addAttribute("agency", agencyRepository.findById(agencyId));
+        model.addAttribute("amount", amount);
+        model.addAttribute("creditperiod", creditperiod);
         return "contactform";
     }
 

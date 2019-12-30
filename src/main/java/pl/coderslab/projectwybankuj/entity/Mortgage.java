@@ -1,10 +1,7 @@
 package pl.coderslab.projectwybankuj.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "mortgages")
@@ -18,39 +15,40 @@ public class Mortgage {
     private String offer;
 
     @NotNull
-    @DecimalMin(value = "0.1")
+    @DecimalMin(value = "0.1", message = "Minimalna wartość to 0.1")
+    @DecimalMax(value = "10.0", message = "Maksymalna wartość to 10")
     private double creditRate;
 
     @NotNull
-    @DecimalMin(value = "0.0")
+    @DecimalMin(value = "0.0", message = "Minimalna wartość to 0")
     private double serviceCharge;
 
     @NotNull
-    @DecimalMin(value = "0.0")
+    @DecimalMin(value = "0.0", message = "Minimalna wartość to 0")
     private double insurance;
 
     @NotNull
-    @DecimalMin(value = "0.0")
+    @DecimalMin(value = "10.0", message = "Minimalna wartość to 10")
     private double contributionPercent;
 
     @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Minimalna kwota kredytu to 1")
     private int minCreditAmount;
 
     @NotNull
-    @Min(2)
+    @Min(value = 2, message = "Minimalna kwota kredytu to 2")
     private int maxCreditAmount;
 
     @NotNull
-    @Min(18)
+    @Min(value = 18, message = "Minimalna wartość to 18")
     private int minBorrowerAge;
 
     @NotNull
-    @Min(19)
+    @Min(value = 19, message = "Minimalna wartość to 19")
     private int maxBorrowerAge;
 
     @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Minimalna wartość to 1")
     private int maxCreditPeriod;
 
     @ManyToOne

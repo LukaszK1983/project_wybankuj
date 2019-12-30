@@ -28,7 +28,7 @@ public class AgencyController {
     @GetMapping
     public String allAgencies(@RequestParam Long bankId, Model model) {
         model.addAttribute("agencies", agencyRepository.findAllByBankId(bankId));
-        model.addAttribute("bankId", bankId);
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "allagencies";
     }
 
@@ -40,8 +40,10 @@ public class AgencyController {
     }
 
     @PostMapping("/add")
-    public String addPostForm(@Valid Agency agency, BindingResult bindingResult) {
+    public String addPostForm(@Valid Agency agency, BindingResult bindingResult,
+                              @RequestParam Long bankId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(bankId));
             return "addagency";
         }
         agencyRepository.save(agency);
@@ -49,25 +51,21 @@ public class AgencyController {
     }
 
     @GetMapping("/edit")
-    public String editInitForm(@RequestParam Long id, Model model) {
+    public String editInitForm(@RequestParam Long id, @RequestParam Long bankId, Model model) {
         model.addAttribute("agency", agencyRepository.findById(id));
+        model.addAttribute("bank", bankRepository.findById(bankId));
         return "editagency";
     }
 
     @PostMapping("/edit")
-    public String editPostForm(@Valid Agency agency, BindingResult bindingResult) {
+    public String editPostForm(@Valid Agency agency, BindingResult bindingResult,
+                               @RequestParam Long bankId, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("bank", bankRepository.findById(bankId));
             return "editagency";
         }
         agencyRepository.save(agency);
         return "redirect:/agency?bankId=" + agency.getBank().getId() + "";
-    }
-
-    @GetMapping("/confirm")
-    public String confirmDelete(@RequestParam Long id, @RequestParam Long bankId, Model model) {
-        model.addAttribute("agency", agencyRepository.findById(id));
-        model.addAttribute("bank", bankRepository.findById(bankId));
-        return "confirmagency";
     }
 
     @GetMapping("/delete")

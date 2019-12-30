@@ -13,7 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}Admin2019").roles("ADMIN");
+                .withUser("admin").password("{noop}").roles("ADMIN");
     }
 
     @Override
@@ -23,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/agency/**").hasRole("ADMIN")
                 .antMatchers("/loan/**").hasRole("ADMIN")
                 .antMatchers("/mortgage/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and().formLogin().loginPage("/login")
-                .and().logout().logoutSuccessUrl("/")
-                .permitAll();
+                .and().logout().logoutSuccessUrl("/admin").permitAll()
+                .and().csrf().disable();
     }
 }
