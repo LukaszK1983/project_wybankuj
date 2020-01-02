@@ -18,6 +18,12 @@
 <div class="container"  style="margin-top: 100px">
     <h3>Symulacje ofert kredytu hipotecznego</h3>
 
+    <c:choose>
+        <c:when test="${empty mortgageSimulation}">
+            <p>Brak ofert dla wybranych parametrów. Spróbouj ponownie.</p>
+            <p><a href="${pageContext.request.contextPath}/mortgageParameters" class="btn btn-sm btn-primary rounded">POWRÓT</a></p>
+        </c:when>
+        <c:otherwise>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -39,6 +45,8 @@
                 <td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${mortgage.key.bank.id}&amount=${amount}&creditperiod=${creditPeriod}"  class="btn btn-sm btn-outline-primary rounded">Lista oddziałów</a></td></tr>
         </c:forEach>
     </table>
+        </c:otherwise>
+    </c:choose>
 </div>
 </body>
 </html>

@@ -19,7 +19,7 @@
 <div class="container"  style="margin-top: 100px">
     <h3>Dane do symulacji kredytu hipotecznego</h3>
 
-    <form action="${pageContext.request.contextPath}/mortgageParameters" method="post">
+    <form action="${pageContext.request.contextPath}/mortgageParameters" method="post" modelAttribute="userMortgage">
         <div class="form-group">
             <label for="formamount">Kwota:</label>
             <input type="text" class="form-control" id="formamount" placeholder="Wprowadź kwotę z przedziału 1000 - 5000000" name="amount">

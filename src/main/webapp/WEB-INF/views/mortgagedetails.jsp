@@ -22,7 +22,7 @@
         <tr><td>Bank: </td><td style="font-weight: bold; color: crimson">${mortgage.bank.bankName}</td></tr>
         <tr><td>Oferta: </td><td style="font-weight: bold; color: crimson">${mortgage.offer}</td></tr>
         <tr><td>Kwota: </td><td style="font-weight: bold; color: crimson">${amount} zł</td></tr>
-        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${creditPeriod}</td></tr>
+        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${creditPeriod} mies.</td></tr>
         <tr><td>Wkład własny: </td><td style="font-weight: bold; color: crimson">${contributionPercent}%</td></tr>
         <tr><td>Rata: </td><td style="font-weight: bold; color: crimson">${payment} zł</td></tr>
         <tr><td>Oprocentowanie: </td><td style="font-weight: bold; color: crimson">${mortgage.creditRate}%</td></tr>

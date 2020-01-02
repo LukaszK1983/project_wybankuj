@@ -1,9 +1,10 @@
 package pl.coderslab.projectwybankuj.service;
 
 import org.springframework.stereotype.Service;
-import pl.coderslab.projectwybankuj.entity.BigDecimalConverter;
 import pl.coderslab.projectwybankuj.entity.Loan;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,63 +15,52 @@ import java.util.stream.Collectors;
 @Service
 public class LoanService {
 
-    private final BigDecimalConverter bigDecimalConverter;
-
-    public LoanService(BigDecimalConverter bigDecimalConverter) {
-        this.bigDecimalConverter = bigDecimalConverter;
-    }
-
-    public Map<Loan, Double> calculateLoanPayment(List<Loan> loans, int amount, int creditPeriod) {
-        Map<Loan, Double> loansWithPayments = new HashMap<>();
+    public Map<Loan, BigDecimal> calculateLoanPayment(List<Loan> loans, int amount, int creditPeriod, int age) {
+        Map<Loan, BigDecimal> loansWithPayments = new HashMap<>();
 
         for (Loan loan : loans) {
-            double rateRatio = 1.0 + (loan.getCreditRate() / 100) / 12;
-//            BigDecimal rateRatio = bigDecimalConverter.convert(1.0 + (loan.getCreditRate() / 100) / 12, TypeDescriptor.collection(Double.class), BigDecimal.class);
-//            BigDecimal rateRatio = BigDecimal.ONE.add((loan.getCreditRate().divide(BigDecimal.valueOf(100), 2, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 2, RoundingMode.CEILING));
-            double payment = rounded(amount * Math.pow(rateRatio, creditPeriod) * ((rateRatio - 1) / (Math.pow(rateRatio, creditPeriod) - 1)));
-//            BigDecimal payment = (amount.multiply(rateRatio.pow(creditPeriod))).multiply((rateRatio.subtract(BigDecimal.ONE)).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.ONE)));
-//            BigDecimal payment = bigDecimalConverter.convert(paymentToConvert, Double.class, BigDecimal.class);
-            loansWithPayments.put(loan, payment);
+            BigDecimal rateRatio = BigDecimal.valueOf(1).add((BigDecimal.valueOf(loan.getCreditRate()).divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 10, RoundingMode.CEILING));
+            BigDecimal payment = BigDecimal.valueOf(amount).multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), 10, RoundingMode.CEILING));
+            BigDecimal roundPayment = payment.setScale(2, RoundingMode.HALF_UP);
+            loansWithPayments.put(loan, roundPayment);
         }
         loansWithPayments = sortByPayment(loansWithPayments);
         return loansWithPayments;
     }
 
-    public double calculateChoosenLoanPayment(Loan loan, int amount, int creditPeriod) {
-        double rateRatio = 1.0 + (loan.getCreditRate() / 100) / 12;
-        double payment = rounded(amount * Math.pow(rateRatio, creditPeriod) * ((rateRatio - 1) / (Math.pow(rateRatio, creditPeriod) - 1)));
-        return payment;
+    public BigDecimal calculateChoosenLoanPayment(Loan loan, int amount, int creditPeriod) {
+        BigDecimal rateRatio = BigDecimal.valueOf(1).add((BigDecimal.valueOf(loan.getCreditRate()).divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 10, RoundingMode.CEILING));
+        BigDecimal payment = BigDecimal.valueOf(amount).multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), 10, RoundingMode.CEILING));
+        BigDecimal roundPayment = payment.setScale(2, RoundingMode.HALF_UP);
+        return roundPayment;
     }
 
-    public double calculateServiceCharge(Loan loan, int amount) {
-        double serviceCharge = rounded(amount * (loan.getServiceCharge() / 100));
-        return serviceCharge;
+    public BigDecimal calculateServiceCharge(Loan loan, int amount) {
+        BigDecimal serviceCharge = BigDecimal.valueOf(amount).multiply(BigDecimal.valueOf(loan.getServiceCharge()).divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING));
+        BigDecimal roundServiceCharge = serviceCharge.setScale(2, RoundingMode.HALF_UP);
+        return roundServiceCharge;
     }
 
-    public double calculateInsurance(Loan loan, int amount) {
-        double insurance = rounded(amount * (loan.getInsurance() / 100));
-        return insurance;
+    public BigDecimal calculateInsurance(Loan loan, int amount) {
+        BigDecimal insurance = BigDecimal.valueOf(amount).multiply(BigDecimal.valueOf(loan.getInsurance()).divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING));
+        BigDecimal roundInsurance = insurance.setScale(2, RoundingMode.HALF_UP);
+        return roundInsurance;
     }
 
-    public double calculateInterestsCost(Loan loan, int amount, int creditPeriod, double payment, double serviceCharge, double insurance) {
-        double interests = rounded(creditPeriod * payment - amount - serviceCharge - insurance);
-        return interests;
+    public BigDecimal calculateInterestsCost(Loan loan, int amount, int creditPeriod, BigDecimal payment, BigDecimal serviceCharge, BigDecimal insurance) {
+        BigDecimal interests = BigDecimal.valueOf(creditPeriod).multiply(payment).subtract(BigDecimal.valueOf(amount)).subtract(serviceCharge).subtract(insurance);
+        BigDecimal roundInterests = interests.setScale(2, RoundingMode.HALF_UP);
+        return roundInterests;
     }
 
-    public double calculateTotalCost(Loan loan, int amount, int creditPeriod, double payment) {
-        double interests = rounded(creditPeriod * payment - amount);
-        return interests;
+    public BigDecimal calculateTotalCost(Loan loan, int amount, int creditPeriod, BigDecimal payment) {
+        BigDecimal interests = BigDecimal.valueOf(creditPeriod).multiply(payment).subtract(BigDecimal.valueOf(amount));
+        BigDecimal roundInterests = interests.setScale(2, RoundingMode.HALF_UP);
+        return roundInterests;
     }
 
-    public double rounded(double number) {
-        number *= 100;
-        number = Math.round(number);
-        number /= 100;
-        return number;
-    }
-
-    public static Map<Loan, Double> sortByPayment(Map<Loan, Double> mapToSort) {
-        Map<Loan, Double> sortedMap =
+    public static Map<Loan, BigDecimal> sortByPayment(Map<Loan, BigDecimal> mapToSort) {
+        Map<Loan, BigDecimal> sortedMap =
                 mapToSort.entrySet().stream()
                         .sorted(Entry.comparingByValue())
                         .collect(Collectors.toMap(Entry::getKey, Entry::getValue,

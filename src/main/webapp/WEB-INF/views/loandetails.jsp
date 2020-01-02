@@ -22,7 +22,7 @@
         <tr><td>Bank: </td><td style="font-weight: bold; color: crimson">${loan.bank.bankName}</td></tr>
         <tr><td>Oferta: </td><td style="font-weight: bold; color: crimson">${loan.offer}</td></tr>
         <tr><td>Kwota: </td><td style="font-weight: bold; color: crimson">${amount} zł</td></tr>
-        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${creditPeriod}</td></tr>
+        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${creditPeriod} mies.</td></tr>
         <tr><td>Rata: </td><td style="font-weight: bold; color: crimson">${payment} zł</td></tr>
         <tr><td>Oprocentowanie: </td><td style="font-weight: bold; color: crimson">${loan.creditRate}%</td></tr>
         <tr><td>Prowizja: </td><td style="font-weight: bold; color: crimson">${loan.serviceCharge}%, czyli ${serviceCharge} zł</td></tr>

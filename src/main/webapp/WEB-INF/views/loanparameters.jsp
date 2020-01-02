@@ -19,7 +19,7 @@
 <div class="container"  style="margin-top: 100px">
     <h3>Dane do symulacji kredytu gotówkowego</h3>
 
-    <form action="${pageContext.request.contextPath}/loanParameters" method="post">
+    <form action="${pageContext.request.contextPath}/loanParameters" method="post" modelAttribute="userLoan">
         <div class="form-group">
             <label for="formamount">Kwota:</label>
             <input type="text" class="form-control" id="formamount" placeholder="Wprowadź kwotę z przedziału 1000 - 200000" name="amount">

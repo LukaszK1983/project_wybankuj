@@ -4,8 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "loans")
-public class Loan {
+@Table(name = "mortgages")
+public class MortgageBackup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,10 @@ public class Loan {
     @NotNull
     @DecimalMin(value = "0.0", message = "Minimalna wartość to 0")
     private double insurance;
+
+    @NotNull
+    @DecimalMin(value = "10.0", message = "Minimalna wartość to 10")
+    private double contributionPercent;
 
     @NotNull
     @Min(value = 1, message = "Minimalna kwota kredytu to 1")
@@ -51,19 +55,6 @@ public class Loan {
     @JoinColumn(name = "bank_id")
     @NotNull
     private Bank bank;
-
-    public Loan(Long id, double creditRate, double insurance, int maxBorrowerAge, int maxCreditAmount, int maxCreditPeriod, int minBorrowerAge, int minCreditAmount, String offer, double serviceCharge, Bank bank) {
-        this.id = id;
-        this.creditRate = creditRate;
-        this.maxBorrowerAge = maxBorrowerAge;
-        this.maxCreditAmount = maxCreditAmount;
-        this.maxCreditPeriod = maxCreditPeriod;
-        this.minBorrowerAge = minBorrowerAge;
-        this.minCreditAmount = minCreditAmount;
-        this.offer = offer;
-        this.serviceCharge = serviceCharge;
-        this.bank = bank;
-    }
 
     public Long getId() {
         return id;
@@ -103,6 +94,14 @@ public class Loan {
 
     public void setInsurance(double insurance) {
         this.insurance = insurance;
+    }
+
+    public double getContributionPercent() {
+        return contributionPercent;
+    }
+
+    public void setContributionPercent(double contributionPercent) {
+        this.contributionPercent = contributionPercent;
     }
 
     public int getMinCreditAmount() {
