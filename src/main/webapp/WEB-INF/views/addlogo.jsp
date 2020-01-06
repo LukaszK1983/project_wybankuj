@@ -14,16 +14,14 @@
 <%@ include file="/WEB-INF/JSPF/header.jspf"%>
 
 <div class="container"  style="margin-top: 100px">
-    <h3>Dodawanie nowego banku</h3>
+    <h3>Dodawanie logo</h3>
 
-    <table class="table">
-        <form:form method="post" modelAttribute="bank">
-            <tr><td>Nazwa: </td><td><form:input path="bankName" /></td>
-                <td><form:errors path="bankName" style="color: red" /></td></tr>
-            <tr><td>Logo - nazwa: </td><td><form:input path="logo" /></td><td></td></tr>
-            <tr><td></td><td><input type="submit" value="ZAPISZ" class="btn btn-sm btn-outline-success rounded" /></td><td></td></tr>
-        </form:form>
-    </table>
+        <form action="${pageContext.request.contextPath}/uploadLogo" method="post">
+            <input type="hidden" name="bankId" value="${bank.get().id}">
+            <label>Nazwa: </label>
+            <input type="file" name="file" />
+            <input type="submit" value="ZAPISZ" class="btn btn-sm btn-outline-success rounded" />
+        </form>
 </div>
 </body>
 </html>

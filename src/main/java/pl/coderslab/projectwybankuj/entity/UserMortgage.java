@@ -1,17 +1,19 @@
 package pl.coderslab.projectwybankuj.entity;
 
+import java.math.BigDecimal;
+
 public class UserMortgage {
     private int amount;
     private int creditPeriod;
     private int age;
-    private double contributionPercent;
+    private BigDecimal contributionPercent;
     private String chooseServiceCharge;
     private String chooseInsurance;
 
     public UserMortgage() {
     }
 
-    public UserMortgage(int amount, int creditPeriod, int age, double contributionPercent, String chooseServiceCharge, String chooseInsurance) {
+    public UserMortgage(int amount, int creditPeriod, int age, BigDecimal contributionPercent, String chooseServiceCharge, String chooseInsurance) {
         this.amount = amount;
         this.creditPeriod = creditPeriod;
         this.age = age;
@@ -44,11 +46,11 @@ public class UserMortgage {
         this.age = age;
     }
 
-    public double getContributionPercent() {
+    public BigDecimal getContributionPercent() {
         return contributionPercent;
     }
 
-    public void setContributionPercent(double contributionPercent) {
+    public void setContributionPercent(BigDecimal contributionPercent) {
         this.contributionPercent = contributionPercent;
     }
 

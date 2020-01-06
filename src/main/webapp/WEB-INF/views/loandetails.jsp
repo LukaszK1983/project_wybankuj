@@ -21,22 +21,22 @@
     <table class="table">
         <tr><td>Bank: </td><td style="font-weight: bold; color: crimson">${loan.bank.bankName}</td></tr>
         <tr><td>Oferta: </td><td style="font-weight: bold; color: crimson">${loan.offer}</td></tr>
-        <tr><td>Kwota: </td><td style="font-weight: bold; color: crimson">${amount} zł</td></tr>
-        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${creditPeriod} mies.</td></tr>
+        <tr><td>Kwota: </td><td style="font-weight: bold; color: crimson">${userLoan.amount} zł</td></tr>
+        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${userLoan.creditPeriod} mies.</td></tr>
         <tr><td>Rata: </td><td style="font-weight: bold; color: crimson">${payment} zł</td></tr>
         <tr><td>Oprocentowanie: </td><td style="font-weight: bold; color: crimson">${loan.creditRate}%</td></tr>
         <tr><td>Prowizja: </td><td style="font-weight: bold; color: crimson">${loan.serviceCharge}%, czyli ${serviceCharge} zł</td></tr>
         <tr><td>Ubezpieczenie: </td><td style="font-weight: bold; color: crimson">${loan.insurance}%, czyli ${insurance} zł</td></tr>
         <tr><td>Odsetki: </td><td style="font-weight: bold; color: crimson">${interests} zł</td></tr>
         <tr><td>Koszt całkowity: </td><td style="font-weight: bold; color: crimson">${totalCost} zł</td></tr>
-        <tr><td></td><td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${loan.bank.id}&amount=${amount}&creditperiod=${creditPeriod}" class="btn btn-sm btn-outline-success rounded">Wybierz oddział do kontaktu</a></td></tr>
+        <tr><td></td><td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${loan.bank.id}&amount=${userLoan.amount}&creditPeriod=${userLoan.creditPeriod}" class="btn btn-sm btn-outline-success rounded">Wybierz oddział do kontaktu</a></td></tr>
         <tr><td></td><td>
-            <form action="${pageContext.request.contextPath}/loanParameters" method="post">
-                <input type="hidden" name="amount" value="${amount}" />
-                <input type="hidden" name="creditPeriod" value="${creditPeriod}" />
-                <input type="hidden" name="age" value="${age}" />
-                <input type="hidden" name="chooseServiceCharge" value="${chooseServiceCharge}" />
-                <input type="hidden" name="chooseInsurance" value="${chooseInsurance}" />
+            <form action="${pageContext.request.contextPath}/loanParameters" method="post" modelattribute="userLoan">
+                <input type="hidden" name="amount" value="${userLoan.amount}" />
+                <input type="hidden" name="creditPeriod" value="${userLoan.creditPeriod}" />
+                <input type="hidden" name="age" value="${userLoan.age}" />
+                <input type="hidden" name="chooseServiceCharge" value="${userLoan.chooseServiceCharge}" />
+                <input type="hidden" name="chooseInsurance" value="${userLoan.chooseInsurance}" />
                 <p><input type="submit" value="Powrót" class="btn btn-sm btn-primary rounded" /></p>
             </form>
         </td></tr>

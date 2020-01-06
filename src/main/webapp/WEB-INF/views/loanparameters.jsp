@@ -36,18 +36,18 @@
             <div class="invalid-feedback" id="validage"></div>
         </div>
         <div class="form-group">
-            <table>
-                <tr><td><label for="formservicecharge">Prowizja:</label></td>
-            <td><select name="chooseServiceCharge" id="formservicecharge" class="selectpicker show-tick">
-                <option value="yes">TAK</option>
+            <label for="formservicecharge">Prowizja:</label>
+            <select name="chooseServiceCharge" id="formservicecharge" class="form-control show-tick">
+                <option value="yes" selected="selected">TAK</option>
                 <option value="no">NIE</option>
-            </select></td></tr>
-                <tr><td><label for="forminsurance">Ubezpieczenie:</label></td>
-                    <td><select name="chooseInsurance" id="forminsurance" class="selectpicker show-tick">
-                <option value="yes">TAK</option>
+            </select>
+        </div>
+        <div class="form-group">
+        <label for="forminsurance">Ubezpieczenie:</label>
+            <select name="chooseInsurance" id="forminsurance" class="form-control show-tick">
+                <option value="yes" selected="selected">TAK</option>
                 <option value="no">NIE</option>
-            </select></td></tr>
-            </table>
+            </select>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-sm btn-primary rounded">DALEJ</button>

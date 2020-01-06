@@ -57,6 +57,14 @@ $(document).ready(function () {
         }
 
         if (testUser === true && testEmail === true && testPhone === true) {
+            const message = $('#formmessage');
+            const firstPart = message.val() + '<br /><br />';
+            const namePart = 'Imię i nazwisko: ' + user + '<br />';
+            const phonePart = 'Telefon: ' + phone + '<br />';
+            const mailPart = 'E-mail: ' + email;
+            const messageToSend = firstPart + namePart + phonePart + mailPart;
+            console.log('Total: ' + messageToSend);
+            message.val(messageToSend).hide();
             form.submit();
         }
     }

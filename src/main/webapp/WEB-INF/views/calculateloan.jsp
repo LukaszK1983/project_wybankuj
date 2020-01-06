@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Symulacje kredytów gotówkowych</title>
@@ -38,11 +39,19 @@
         </thead>
         <c:forEach var="loan" items="${loanSimulation}">
             <tr>
-            <td><img src="<c:url value="/img/${loan.key.bank.logo}" />" width="70" height="40" alt="${loan.key.bank.bankName}"/></td>
-                <td>${loan.key.offer}</td><td>${amount} zł</td>
-                <td>${creditPeriod} mies.</td><td style="font-weight: bold; color: crimson">${loan.value} zł</td>
-            <td><a href="${pageContext.request.contextPath}/loanDetails?loanId=${loan.key.id}&amount=${amount}&creditPeriod=${creditPeriod}&chooseServiceCharge=${chooseServiceCharge}&chooseInsurance=${chooseInsurance}&age=${age}" class="btn btn-sm btn-outline-primary rounded">Szczegóły</a></td>
-                <td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${loan.key.bank.id}&amount=${amount}&creditperiod=${creditPeriod}" class="btn btn-sm btn-outline-primary rounded">Lista oddziałów</a></td></tr>
+                <td><img src="<c:url value="/img/${loan.key.bank.logo}" />" width="70" height="40" alt="${loan.key.bank.bankName}"/></td>
+                <td>${loan.key.offer}</td><td>${userLoan.amount} zł</td>
+                <td>${userLoan.creditPeriod} mies.</td><td style="font-weight: bold; color: crimson">${loan.value} zł</td>
+                <form action="${pageContext.request.contextPath}/loanDetails" method="post" modelAttribute="userLoan">
+                    <input type="hidden" name="loanId" value="${loan.key.id}">
+                    <input type="hidden" name="amount" value="${userLoan.amount}">
+                    <input type="hidden" name="creditPeriod" value="${userLoan.creditPeriod}">
+                    <input type="hidden" name="age" value="${userLoan.age}">
+                    <input type="hidden" name="chooseServiceCharge" value="${userLoan.chooseServiceCharge}">
+                    <input type="hidden" name="chooseInsurance" value="${userLoan.chooseInsurance}">
+                <td><input type="submit" value="Szczegóły" class="btn btn-sm btn-outline-primary rounded"></td>
+                </form>
+                <td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${loan.key.bank.id}&amount=${userLoan.amount}&creditPeriod=${userLoan.creditPeriod}" class="btn btn-sm btn-outline-primary rounded">Lista oddziałów</a></td></tr>
         </c:forEach>
     </table>
         </c:otherwise>

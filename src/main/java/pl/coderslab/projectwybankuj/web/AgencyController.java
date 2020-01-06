@@ -76,7 +76,7 @@ public class AgencyController {
 
     @ModelAttribute("hours")
     public List<String> hours() {
-        return Arrays.asList("8:00 - 18:00", "9:00 - 17:00", "9:30 - 17:30", "10:00 - 18:00");
+        return Arrays.asList("08:00 - 18:00", "09:00 - 17:00", "09:30 - 17:30", "10:00 - 18:00");
     }
 
     @ModelAttribute("banks")

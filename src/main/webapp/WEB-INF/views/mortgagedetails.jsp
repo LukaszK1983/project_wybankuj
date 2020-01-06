@@ -21,24 +21,24 @@
     <table class="table">
         <tr><td>Bank: </td><td style="font-weight: bold; color: crimson">${mortgage.bank.bankName}</td></tr>
         <tr><td>Oferta: </td><td style="font-weight: bold; color: crimson">${mortgage.offer}</td></tr>
-        <tr><td>Kwota: </td><td style="font-weight: bold; color: crimson">${amount} zł</td></tr>
-        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${creditPeriod} mies.</td></tr>
-        <tr><td>Wkład własny: </td><td style="font-weight: bold; color: crimson">${contributionPercent}%</td></tr>
+        <tr><td>Kwota: </td><td style="font-weight: bold; color: crimson">${userMortgage.amount} zł</td></tr>
+        <tr><td>Okres: </td><td style="font-weight: bold; color: crimson">${userMortgage.creditPeriod} mies.</td></tr>
+        <tr><td>Wkład własny: </td><td style="font-weight: bold; color: crimson">${userMortgage.contributionPercent}%</td></tr>
         <tr><td>Rata: </td><td style="font-weight: bold; color: crimson">${payment} zł</td></tr>
         <tr><td>Oprocentowanie: </td><td style="font-weight: bold; color: crimson">${mortgage.creditRate}%</td></tr>
         <tr><td>Prowizja: </td><td style="font-weight: bold; color: crimson">${mortgage.serviceCharge}%, czyli ${serviceCharge} zł</td></tr>
         <tr><td>Ubezpieczenie: </td><td style="font-weight: bold; color: crimson">${mortgage.insurance}%, czyli ${insurance} zł</td></tr>
         <tr><td>Odsetki: </td><td style="font-weight: bold; color: crimson">${interests} zł</td></tr>
         <tr><td>Koszt całkowity: </td><td style="font-weight: bold; color: crimson">${totalCost} zł</td></tr>
-        <tr><td></td><td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${mortgage.bank.id}&amount=${amount}&creditperiod=${creditPeriod}" class="btn btn-sm btn-outline-success rounded">Wybierz oddział do kontaktu</a></td></tr>
+        <tr><td></td><td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${mortgage.bank.id}&amount=${userMortgage.amount}&creditPeriod=${userMortgage.creditPeriod}" class="btn btn-sm btn-outline-success rounded">Wybierz oddział do kontaktu</a></td></tr>
         <tr><td></td><td>
-            <form action="${pageContext.request.contextPath}/mortgageParameters" method="post">
-                <input type="hidden" name="amount" value="${amount}" />
-                <input type="hidden" name="creditPeriod" value="${creditPeriod}" />
-                <input type="hidden" name="contributionPercent" value="${contributionPercent}" />
-                <input type="hidden" name="age" value="${age}" />
-                <input type="hidden" name="chooseServiceCharge" value="${chooseServiceCharge}" />
-                <input type="hidden" name="chooseInsurance" value="${chooseInsurance}" />
+            <form action="${pageContext.request.contextPath}/mortgageParameters" method="post" modelattribute="userMortgage">
+                <input type="hidden" name="amount" value="${userMortgage.amount}" />
+                <input type="hidden" name="creditPeriod" value="${userMortgage.creditPeriod}" />
+                <input type="hidden" name="contributionPercent" value="${userMortgage.contributionPercent}" />
+                <input type="hidden" name="age" value="${userMortgage.age}" />
+                <input type="hidden" name="chooseServiceCharge" value="${userMortgage.chooseServiceCharge}" />
+                <input type="hidden" name="chooseInsurance" value="${userMortgage.chooseInsurance}" />
                 <p><input type="submit" value="Powrót" class="btn btn-sm btn-primary rounded" /></p>
             </form>
         </td></tr>

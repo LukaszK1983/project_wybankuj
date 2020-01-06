@@ -35,60 +35,38 @@ public class HomeMortgageController {
     @PostMapping("/mortgageParameters")
     public String postMortgageParameters(@ModelAttribute UserMortgage userMortgage,
                                          Model model) {
-
-        List<Mortgage> mortgages;
-        if (userMortgage.getChooseInsurance().equals("no") && userMortgage.getChooseServiceCharge().equals("no")) {
-            mortgages = mortgageRepository.findAllByParametersWithoutInsuranceAndServiceCharge(userMortgage.getAmount(), userMortgage.getCreditPeriod(), userMortgage.getAge(), userMortgage.getContributionPercent());
-        } else if (userMortgage.getChooseInsurance().equals("no") && userMortgage.getChooseServiceCharge().equals("yes")) {
-            mortgages = mortgageRepository.findAllByParametersWithoutInsurance(userMortgage.getAmount(), userMortgage.getCreditPeriod(), userMortgage.getAge(), userMortgage.getContributionPercent());
-        } else if (userMortgage.getChooseServiceCharge().equals("no") && userMortgage.getChooseInsurance().equals("yes")) {
-            mortgages = mortgageRepository.findAllByParametersWithoutServiceCharge(userMortgage.getAmount(), userMortgage.getCreditPeriod(), userMortgage.getAge(), userMortgage.getContributionPercent());
-        } else {
-            mortgages = mortgageRepository.findAllByParameters(userMortgage.getAmount(), userMortgage.getCreditPeriod(), userMortgage.getAge(), userMortgage.getContributionPercent());
-        }
+        List<Mortgage> mortgages = mortgageService.chooseOffers(userMortgage.getChooseInsurance(),
+                userMortgage.getChooseServiceCharge(), userMortgage.getAmount(),
+                userMortgage.getCreditPeriod(), userMortgage.getAge(), userMortgage.getContributionPercent());
         Map<Mortgage, BigDecimal> mortgagesWithPayments = mortgageService.calculateMortgagePayment(mortgages, userMortgage.getAmount(), userMortgage.getCreditPeriod());
 
         model.addAttribute("mortgageSimulation", mortgagesWithPayments);
-        model.addAttribute("amount", userMortgage.getAmount());
-        model.addAttribute("creditPeriod", userMortgage.getCreditPeriod());
-        model.addAttribute("contributionPercent", userMortgage.getContributionPercent());
-        model.addAttribute("chooseServiceCharge", userMortgage.getChooseServiceCharge());
-        model.addAttribute("chooseInsurance", userMortgage.getChooseInsurance());
-        model.addAttribute("age", userMortgage.getAge());
+        model.addAttribute("userMortgage", userMortgage);
 
         return "calculatemortgage";
     }
 
-    @GetMapping("/mortgageDetails")
-    public String getMortgageDetails(@RequestParam Long mortgageId, @RequestParam int amount, @RequestParam int creditPeriod,
-                                     @RequestParam double contributionPercent, @RequestParam String chooseServiceCharge,
-                                     @RequestParam String chooseInsurance, @RequestParam int age, Model model) {
+    @PostMapping("/mortgageDetails")
+    public String getMortgageDetails(@RequestParam Long mortgageId, @ModelAttribute UserMortgage userMortgage, Model model) {
         Mortgage mortgage = mortgageRepository.findById(mortgageId).orElse(new Mortgage());
         model.addAttribute("mortgage", mortgage);
 
-        BigDecimal payment = mortgageService.calculateChoosenMortgagePayment(mortgage, amount, creditPeriod);
+        BigDecimal payment = mortgageService.calculateChoosenMortgagePayment(mortgage, userMortgage.getAmount(), userMortgage.getCreditPeriod());
         model.addAttribute("payment", payment);
 
-        BigDecimal serviceCharge = mortgageService.calculateServiceCharge(mortgage, amount);
+        BigDecimal serviceCharge = mortgageService.calculateServiceCharge(mortgage, userMortgage.getAmount());
         model.addAttribute("serviceCharge", serviceCharge);
 
-        BigDecimal insurance = mortgageService.calculateInsurance(mortgage, amount);
+        BigDecimal insurance = mortgageService.calculateInsurance(mortgage, userMortgage.getAmount());
         model.addAttribute("insurance", insurance);
 
-        BigDecimal interests = mortgageService.calculateInterestsCost(mortgage, amount, creditPeriod, payment, serviceCharge, insurance);
+        BigDecimal interests = mortgageService.calculateInterestsCost(mortgage, userMortgage.getAmount(), userMortgage.getCreditPeriod(), payment, serviceCharge, insurance);
         model.addAttribute("interests", interests);
 
-        BigDecimal totalCost = mortgageService.calculateTotalCost(mortgage, amount, creditPeriod, payment);
+        BigDecimal totalCost = mortgageService.calculateTotalCost(mortgage, userMortgage.getAmount(), userMortgage.getCreditPeriod(), payment);
         model.addAttribute("totalCost", totalCost);
 
-        model.addAttribute("amount", amount);
-        model.addAttribute("creditPeriod", creditPeriod);
-        model.addAttribute("contributionPercent", contributionPercent);
-        model.addAttribute("serviceCharge", serviceCharge);
-        model.addAttribute("insurance", insurance);
-        model.addAttribute("age", age);
-        model.addAttribute("chooseServiceCharge", chooseServiceCharge);
-        model.addAttribute("chooseInsurance", chooseInsurance);
+        model.addAttribute("userMortgage", userMortgage);
 
         return "mortgagedetails";
     }

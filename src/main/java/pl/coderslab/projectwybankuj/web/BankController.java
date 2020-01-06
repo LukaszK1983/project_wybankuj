@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.projectwybankuj.entity.Bank;
 import pl.coderslab.projectwybankuj.repository.BankRepository;
+import pl.coderslab.projectwybankuj.service.LogoService;
 
 import javax.validation.Valid;
 
@@ -17,15 +18,23 @@ import javax.validation.Valid;
 public class BankController {
 
     private final BankRepository bankRepository;
+    private final LogoService bankService;
 
-    public BankController(BankRepository bankRepository) {
+    public BankController(BankRepository bankRepository, LogoService bankService) {
         this.bankRepository = bankRepository;
+        this.bankService = bankService;
     }
 
     @GetMapping
     public String allBanks(Model model) {
         model.addAttribute("banks", bankRepository.findAll());
         return "allbanks";
+    }
+
+    @GetMapping("/logo")
+    public String addLogo(@RequestParam Long bankId, Model model) {
+        model.addAttribute("bank", bankRepository.findById(bankId));
+        return "addlogo";
     }
 
     @GetMapping("/add")
@@ -50,10 +59,8 @@ public class BankController {
     }
 
     @PostMapping("/edit")
-    public String editPostForm(@Valid Bank bank, BindingResult bindingResult,
-                               @RequestParam Long id, Model model) {
+    public String editPostForm(@Valid Bank bank, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("bank", bankRepository.findById(id));
             return "editbank";
         }
         bankRepository.save(bank);

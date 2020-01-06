@@ -39,10 +39,20 @@
         <c:forEach var="mortgage" items="${mortgageSimulation}">
             <tr>
                 <td><img src="<c:url value="/img/${mortgage.key.bank.logo}" />" width="70" height="40" alt="${mortgage.key.bank.bankName}"/></td>
-                <td>${mortgage.key.offer}</td><td>${amount} zł</td>
-                <td>${creditPeriod} mies.</td><td style="font-weight: bold; color: crimson">${mortgage.value} zł</td>
-                <td><a href="${pageContext.request.contextPath}/mortgageDetails?mortgageId=${mortgage.key.id}&amount=${amount}&creditPeriod=${creditPeriod}&contributionPercent=${contributionPercent}&chooseServiceCharge=${chooseServiceCharge}&chooseInsurance=${chooseInsurance}&age=${age}" class="btn btn-sm btn-outline-primary rounded">Szczegóły</a></td>
-                <td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${mortgage.key.bank.id}&amount=${amount}&creditperiod=${creditPeriod}"  class="btn btn-sm btn-outline-primary rounded">Lista oddziałów</a></td></tr>
+                <td>${mortgage.key.offer}</td><td>${userMortgage.amount} zł</td>
+                <td>${userMortgage.creditPeriod} mies.</td><td style="font-weight: bold; color: crimson">${mortgage.value} zł</td>
+                <form action="${pageContext.request.contextPath}/mortgageDetails" method="post" modelAttribute="userMortgage">
+                    <input type="hidden" name="mortgageId" value="${mortgage.key.id}">
+                    <input type="hidden" name="amount" value="${userMortgage.amount}">
+                    <input type="hidden" name="creditPeriod" value="${userMortgage.creditPeriod}">
+                    <input type="hidden" name="contributionPercent" value="${userMortgage.contributionPercent}">
+                    <input type="hidden" name="age" value="${userMortgage.age}">
+                    <input type="hidden" name="chooseServiceCharge" value="${userMortgage.chooseServiceCharge}">
+                    <input type="hidden" name="chooseInsurance" value="${userMortgage.chooseInsurance}">
+                    <td><input type="submit" value="Szczegóły" class="btn btn-sm btn-outline-primary rounded"></td>
+                </form>
+<%--                <td><a href="${pageContext.request.contextPath}/mortgageDetails?mortgageId=${mortgage.key.id}&amount=${amount}&creditPeriod=${creditPeriod}&contributionPercent=${contributionPercent}&chooseServiceCharge=${chooseServiceCharge}&chooseInsurance=${chooseInsurance}&age=${age}" class="btn btn-sm btn-outline-primary rounded">Szczegóły</a></td>--%>
+                <td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${mortgage.key.bank.id}&amount=${userMortgage.amount}&creditPeriod=${userMortgage.creditPeriod}"  class="btn btn-sm btn-outline-primary rounded">Lista oddziałów</a></td></tr>
         </c:forEach>
     </table>
         </c:otherwise>

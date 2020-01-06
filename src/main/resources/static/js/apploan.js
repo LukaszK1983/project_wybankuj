@@ -4,9 +4,9 @@ $(document).ready(function () {
 
     function check() {
         const form = $('form');
-        let testAmount = true;
-        let testCreditPeriod = true;
-        let testAge = true;
+        let testAmount;
+        let testCreditPeriod;
+        let testAge;
 
         const amountElement = $('#formamount');
         const amount = amountElement.val();

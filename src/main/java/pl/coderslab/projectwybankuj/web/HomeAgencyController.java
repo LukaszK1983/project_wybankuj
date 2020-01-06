@@ -11,7 +11,6 @@ import pl.coderslab.projectwybankuj.repository.AgencyRepository;
 import pl.coderslab.projectwybankuj.repository.BankRepository;
 import pl.coderslab.projectwybankuj.service.EmailService;
 
-import javax.mail.MessagingException;
 import java.util.List;
 
 //import org.thymeleaf.TemplateEngine;
@@ -33,7 +32,7 @@ public class HomeAgencyController {
 
     @GetMapping("/listOfAgencies")
     public String getAgencies(@RequestParam Long bankId, @RequestParam int amount,
-                              @RequestParam int creditperiod, Model model) {
+                              @RequestParam int creditPeriod, Model model) {
         List<Agency> agencies = agencyRepository.findAllByBankId(bankId);
         model.addAttribute("agencies", agencies);
 
@@ -41,14 +40,14 @@ public class HomeAgencyController {
         model.addAttribute("bank", bank);
 
         model.addAttribute("amount", amount);
-        model.addAttribute("creditperiod", creditperiod);
+        model.addAttribute("creditPeriod", creditPeriod);
 
         return "listofagencies";
     }
 
     @PostMapping("/listOfAgencies")
     public String getAgenciesByCity(@RequestParam Long bankId, @RequestParam String city,
-                                    @RequestParam int amount, @RequestParam int creditperiod,
+                                    @RequestParam int amount, @RequestParam int creditPeriod,
                                     Model model) {
         List<Agency> agencies = agencyRepository.findAllByBankIdAndCity(bankId, city);
         model.addAttribute("agencies", agencies);
@@ -57,24 +56,25 @@ public class HomeAgencyController {
         model.addAttribute("bank", bank);
 
         model.addAttribute("amount", amount);
-        model.addAttribute("creditperiod", creditperiod);
+        model.addAttribute("creditPeriod", creditPeriod);
 
         return "listofagencies";
     }
 
     @GetMapping("/agencyContactForm")
     public String agencyContactForm(@RequestParam Long agencyId, @RequestParam int amount,
-                                    @RequestParam int creditperiod, Model model) {
+                                    @RequestParam int creditPeriod, Model model) {
         model.addAttribute("agency", agencyRepository.findById(agencyId));
         model.addAttribute("amount", amount);
-        model.addAttribute("creditperiod", creditperiod);
+        model.addAttribute("creditPeriod", creditPeriod);
         return "contactform";
     }
 
     @PostMapping("/agencyContactForm")
     public String sendAgencyContactForm(@RequestParam Long agencyId, @RequestParam String name,
-                                        @RequestParam String email, @RequestParam String phone,
-                                        @RequestParam String message) throws MessagingException {
+                                        @RequestParam String message, @RequestParam int amount,
+                                        @RequestParam int creditPeriod, Model model) {
+
 //        Context context = new Context();
 //        context.setVariable("name", name);
 //        context.setVariable("contact", email);
@@ -83,7 +83,15 @@ public class HomeAgencyController {
 //        String body = templateEngine.process("message", context);
 //        emailService.send(agencyRepository.findById(agencyId).get().getEmail(), "Wiadomość z Wybankuj", body);
         String agencyMail = agencyRepository.findById(agencyId).get().getEmail();
-        emailService.send(agencyMail, name, message);
-        return "index";
+        String title = "Wiadomość z Wybankuj.pl - " + name;
+        emailService.send(agencyMail, title, message);
+        String answear = "yes";
+
+        model.addAttribute("agency", agencyRepository.findById(agencyId));
+        model.addAttribute("amount", amount);
+        model.addAttribute("creditPeriod", creditPeriod);
+        model.addAttribute("answear", answear);
+
+        return "contactform";
     }
 }

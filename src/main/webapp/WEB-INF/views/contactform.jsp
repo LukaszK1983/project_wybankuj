@@ -19,6 +19,13 @@
 <div class="container"  style="margin-top: 100px">
     <h3><img src="<c:url value="/img/${agency.get().bank.logo}" />" width="150" height="70" alt="${agency.get().bank.bankName}"/> ${agency.get().agencyName} - Formularz kontaktowy</h3>
 
+    <c:choose>
+        <c:when test="${empty answear}">
+        </c:when>
+        <c:otherwise>
+            <h6 style="color: green">Wiadomość została wysłana. Dziękujemy za kontakt.</h6>
+        </c:otherwise>
+    </c:choose>
     <form action="${pageContext.request.contextPath}/agencyContactForm" method="post">
         <input type="hidden" name="agencyId" value="${agency.get().id}" />
         <div class="form-group">
@@ -41,12 +48,15 @@
             <textarea class="form-control" id="formmessage" rows="7" name="message">
                 Dzień dobry,
 
-                interesuje mnie kredyt w kwocie ${amount} zł na okres ${creditperiod} miesięcy. Proszę o kontakt.
+                interesuje mnie kredyt w kwocie ${amount} zł na okres ${creditPeriod} miesięcy. Proszę o kontakt.
 
                 Pozdrawiam
             </textarea>
         </div>
         <div class="form-group">
+            <input type="hidden" name="agencyId" value="${agency.get().id}">
+            <input type="hidden" name="amount" value="${amount}" />
+            <input type="hidden" name="creditPeriod" value="${creditPeriod}" />
             <button type="submit" class="btn btn-sm btn-primary rounded">WYŚLIJ</button>
         </div>
     </form>

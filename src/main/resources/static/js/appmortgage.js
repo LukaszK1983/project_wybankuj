@@ -4,22 +4,56 @@ $(document).ready(function () {
 
     function check() {
         const form = $('form');
+        let testCost = true;
         let testAmount = true;
         let testCreditPeriod = true;
         let testAge = true;
-        let testContribution = true;
+
+        const costElement = $('#formcost');
+        const cost = costElement.val();
+        const regexCost = new RegExp('^\\d+$');
+        const validcost = $('#validcost').hide();
+        const validcostbyamount = $('#validcostbyamount').hide();
+
+        if (!regexCost.test(cost) || cost <= 0) {
+            validcost.show();
+            costElement.css('border', '1px solid #C24754');
+            costElement.css('box-shadow', '0 0 10px 1px #C24754');
+            testCost = false;
+        } else if (cost < 11200) {
+            validcostbyamount.text('Minimalna kwota inwestycji to 11200 zł');
+            validcostbyamount.show();
+            costElement.css('border', '1px solid #C24754');
+            costElement.css('box-shadow', '0 0 10px 1px #C24754');
+            testCost = false;
+        }
+        else {
+            costElement.css('border', '1px solid green');
+            costElement.css('box-shadow', '0 0 0 0');
+            testCost = true;
+        }
 
         const amountElement = $('#formamount');
         const amount = amountElement.val();
         const regexAmount = new RegExp('^\\d{4,8}$');
         const validamount = $('#validamount').hide();
+        const validamountbycontribution = $('#validamountbycontribution').hide();
 
         if (!regexAmount.test(amount) || amount < 1000 || amount > 5000000) {
             validamount.show();
             amountElement.css('border', '1px solid #C24754');
             amountElement.css('box-shadow', '0 0 10px 1px #C24754');
             testAmount = false;
-        } else {
+        } else if ((cost - amount) / cost * 100 < 10) {
+            const availableAmount = cost - cost * 0.1;
+            validamountbycontribution.text("Uwzględniając wymagany wkład własny, maksymalna dostępna kwota" +
+                " kredytu to " + availableAmount);
+            validamountbycontribution.show();
+            amountElement.css('border', '1px solid #C24754');
+            amountElement.css('box-shadow', '0 0 10px 1px #C24754');
+            testAmount = false;
+        }
+        else {
             amountElement.css('border', '1px solid green');
             amountElement.css('box-shadow', '0 0 0 0');
             testAmount = true;
@@ -65,22 +99,9 @@ $(document).ready(function () {
         }
 
         const contributionElement = $('#formcontribution');
-        const contribution = contributionElement.val();
-        const regexContribution = new RegExp('^\\d{2}$');
-        const validContribution = $('#validcontribution').hide();
+        contributionElement.val((cost - amount) / cost * 100);
 
-        if (!regexContribution.test(contribution)) {
-            validContribution.show();
-            contributionElement.css('border', '1px solid #C24754');
-            contributionElement.css('box-shadow', '0 0 10px 1px #C24754');
-            testContribution = false;
-        } else {
-            contributionElement.css('border', '1px solid green');
-            contributionElement.css('box-shadow', '0 0 0 0');
-            testContribution = true;
-        }
-
-        if (testAmount === true && testCreditPeriod === true && testAge === true && testContribution === true) {
+        if (testCost === true && testAmount === true && testCreditPeriod === true && testAge === true) {
             form.submit();
         }
     }

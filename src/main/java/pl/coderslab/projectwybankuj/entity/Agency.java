@@ -1,7 +1,13 @@
 package pl.coderslab.projectwybankuj.entity;
 
+import pl.coderslab.projectwybankuj.validator.CheckPhone;
+import pl.coderslab.projectwybankuj.validator.CheckZipCode;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "agencies")
@@ -11,31 +17,31 @@ public class Agency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 3, max = 50, message = "Wprowadzona wartość może mieć od 3 do 50 znaków")
+    @Size(min = 3, max = 50)
     private String agencyName;
 
     @NotEmpty
-    @Size(min = 3, max = 50, message = "Wprowadzona wartość może mieć od 3 do 50 znaków")
+    @Size(min = 3, max = 50)
     private String street;
 
     @NotEmpty
-    @Size(max = 10, message = "Wprowadzona wartość może mieć maksymalnie 10 znaków")
+    @Size(min = 1, max = 10)
     private String streetNumber;
 
     @NotEmpty
-    @Pattern(regexp = "^\\d{2}-\\d{3}$", message = "Wprowadzona wartość powinna być w formacie np. 00-000")
+    @CheckZipCode()
     private String zipCode;
 
     @NotEmpty
-    @Size(min = 3, max = 20, message = "Wprowadzona wartość może mieć od 3 do 20 znaków")
+    @Size(min = 3, max = 20)
     private String city;
 
     @NotEmpty
-    @Pattern(regexp = "\\d{9}", message = "Wprowadzona wartość powinna być w formacie np. 000000000")
+    @CheckPhone()
     private String phone;
 
     @NotEmpty
-    @Email(message = "Wprowadzona wartość powinna być w formacie np. mail@mail.pl")
+    @Email
     private String email;
 
     @NotEmpty

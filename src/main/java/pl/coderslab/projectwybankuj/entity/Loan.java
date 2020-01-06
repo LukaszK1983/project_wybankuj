@@ -2,6 +2,7 @@ package pl.coderslab.projectwybankuj.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "loans")
@@ -15,44 +16,47 @@ public class Loan {
     private String offer;
 
     @NotNull
-    @DecimalMin(value = "0.1", message = "Minimalna wartość to 0.1")
-    @DecimalMax(value = "10.0", message = "Maksymalna wartość to 10")
-    private double creditRate;
+    @DecimalMin(value = "0.1")
+    @DecimalMax(value = "10.0")
+    private BigDecimal creditRate;
 
     @NotNull
-    @DecimalMin(value = "0.0", message = "Minimalna wartość to 0")
-    private double serviceCharge;
+    @DecimalMin(value = "0.0")
+    private BigDecimal serviceCharge;
 
     @NotNull
-    @DecimalMin(value = "0.0", message = "Minimalna wartość to 0")
-    private double insurance;
+    @DecimalMin(value = "0.0")
+    private BigDecimal insurance;
 
     @NotNull
-    @Min(value = 1, message = "Minimalna kwota kredytu to 1")
-    private int minCreditAmount;
+    @Min(value = 1)
+    private Integer minCreditAmount;
 
     @NotNull
-    @Min(value = 2, message = "Minimalna kwota kredytu to 2")
-    private int maxCreditAmount;
+    @Min(value = 2)
+    private Integer maxCreditAmount;
 
     @NotNull
-    @Min(value = 18, message = "Minimalna wartość to 18")
-    private int minBorrowerAge;
+    @Min(value = 18)
+    private Integer minBorrowerAge;
 
     @NotNull
-    @Min(value = 19, message = "Minimalna wartość to 19")
-    private int maxBorrowerAge;
+    @Min(value = 19)
+    private Integer maxBorrowerAge;
 
     @NotNull
-    @Min(value = 1, message = "Minimalna wartość to 1")
-    private int maxCreditPeriod;
+    @Min(value = 1)
+    private Integer maxCreditPeriod;
 
     @ManyToOne
     @JoinColumn(name = "bank_id")
     @NotNull
     private Bank bank;
 
-    public Loan(Long id, double creditRate, double insurance, int maxBorrowerAge, int maxCreditAmount, int maxCreditPeriod, int minBorrowerAge, int minCreditAmount, String offer, double serviceCharge, Bank bank) {
+    public Loan() {
+    }
+
+    public Loan(Long id, BigDecimal creditRate, BigDecimal insurance, int maxBorrowerAge, int maxCreditAmount, int maxCreditPeriod, int minBorrowerAge, int minCreditAmount, String offer, BigDecimal serviceCharge, Bank bank) {
         this.id = id;
         this.creditRate = creditRate;
         this.maxBorrowerAge = maxBorrowerAge;
@@ -60,6 +64,7 @@ public class Loan {
         this.maxCreditPeriod = maxCreditPeriod;
         this.minBorrowerAge = minBorrowerAge;
         this.minCreditAmount = minCreditAmount;
+        this.insurance = insurance;
         this.offer = offer;
         this.serviceCharge = serviceCharge;
         this.bank = bank;
@@ -81,67 +86,67 @@ public class Loan {
         this.offer = offer;
     }
 
-    public double getCreditRate() {
+    public BigDecimal getCreditRate() {
         return creditRate;
     }
 
-    public void setCreditRate(double creditRate) {
+    public void setCreditRate(BigDecimal creditRate) {
         this.creditRate = creditRate;
     }
 
-    public double getServiceCharge() {
+    public BigDecimal getServiceCharge() {
         return serviceCharge;
     }
 
-    public void setServiceCharge(double serviceCharge) {
+    public void setServiceCharge(BigDecimal serviceCharge) {
         this.serviceCharge = serviceCharge;
     }
 
-    public double getInsurance() {
+    public BigDecimal getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(double insurance) {
+    public void setInsurance(BigDecimal insurance) {
         this.insurance = insurance;
     }
 
-    public int getMinCreditAmount() {
+    public Integer getMinCreditAmount() {
         return minCreditAmount;
     }
 
-    public void setMinCreditAmount(int minCreditAmount) {
+    public void setMinCreditAmount(Integer minCreditAmount) {
         this.minCreditAmount = minCreditAmount;
     }
 
-    public int getMaxCreditAmount() {
+    public Integer getMaxCreditAmount() {
         return maxCreditAmount;
     }
 
-    public void setMaxCreditAmount(int maxCreditAmount) {
+    public void setMaxCreditAmount(Integer maxCreditAmount) {
         this.maxCreditAmount = maxCreditAmount;
     }
 
-    public int getMinBorrowerAge() {
+    public Integer getMinBorrowerAge() {
         return minBorrowerAge;
     }
 
-    public void setMinBorrowerAge(int minBorrowerAge) {
+    public void setMinBorrowerAge(Integer minBorrowerAge) {
         this.minBorrowerAge = minBorrowerAge;
     }
 
-    public int getMaxBorrowerAge() {
+    public Integer getMaxBorrowerAge() {
         return maxBorrowerAge;
     }
 
-    public void setMaxBorrowerAge(int maxBorrowerAge) {
+    public void setMaxBorrowerAge(Integer maxBorrowerAge) {
         this.maxBorrowerAge = maxBorrowerAge;
     }
 
-    public int getMaxCreditPeriod() {
+    public Integer getMaxCreditPeriod() {
         return maxCreditPeriod;
     }
 
-    public void setMaxCreditPeriod(int maxCreditPeriod) {
+    public void setMaxCreditPeriod(Integer maxCreditPeriod) {
         this.maxCreditPeriod = maxCreditPeriod;
     }
 

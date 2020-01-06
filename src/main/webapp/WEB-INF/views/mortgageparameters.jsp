@@ -21,9 +21,16 @@
 
     <form action="${pageContext.request.contextPath}/mortgageParameters" method="post" modelAttribute="userMortgage">
         <div class="form-group">
-            <label for="formamount">Kwota:</label>
+            <label for="formcost">Koszt inwestycji:</label>
+            <input type="text" class="form-control" id="formcost" placeholder="Wprowadź kwotę planowanej inwestycji, np. zakup + remont">
+            <div class="invalid-feedback" id="validcost">Wprowadzono błędne dane</div>
+            <div class="invalid-feedback" id="validcostbyamount"></div>
+        </div>
+        <div class="form-group">
+            <label for="formamount">Kwota kredytu:</label>
             <input type="text" class="form-control" id="formamount" placeholder="Wprowadź kwotę z przedziału 1000 - 5000000" name="amount">
             <div class="invalid-feedback" id="validamount">Wprowadzono błędne dane</div>
+            <div class="invalid-feedback" id="validamountbycontribution"></div>
         </div>
         <div class="form-group">
             <label for="formcreditperiod">Okres:</label>
@@ -31,9 +38,7 @@
             <div class="invalid-feedback" id="validcreditperiod">Wprowadzono błędne dane</div>
         </div>
         <div class="form-group">
-            <label for="formcontribution">Wkład własny[%]:</label>
-            <input type="text" class="form-control" id="formcontribution" placeholder="Wprowadź % posiadanego wkładu własnego, min. 10" name="contributionPercent">
-            <div class="invalid-feedback" id="validcontribution">Wprowadzono błędne dane</div>
+            <input type="hidden" class="form-control" id="formcontribution" placeholder="Wprowadź % posiadanego wkładu własnego, min. 10" name="contributionPercent" value="">
         </div>
         <div class="form-group">
             <label for="formage">Wiek:</label>
@@ -41,18 +46,18 @@
             <div class="invalid-feedback" id="validage"></div>
         </div>
         <div class="form-group">
-            <table>
-                <tr><td><label for="formservicecharge">Prowizja:</label></td>
-                    <td><select name="chooseServiceCharge" id="formservicecharge" class="selectpicker show-tick">
-                        <option value="yes">TAK</option>
-                        <option value="no">NIE</option>
-                    </select></td></tr>
-                <tr><td><label for="forminsurance">Ubezpieczenie:</label></td>
-                    <td><select name="chooseInsurance" id="forminsurance" class="selectpicker show-tick">
-                        <option value="yes">TAK</option>
-                        <option value="no">NIE</option>
-                    </select></td></tr>
-            </table>
+            <label for="formservicecharge">Prowizja:</label>
+            <select name="chooseServiceCharge" id="formservicecharge" class="form-control show-tick">
+                <option value="yes">TAK</option>
+                <option value="no">NIE</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="forminsurance">Ubezpieczenie:</label>
+            <select name="chooseInsurance" id="forminsurance" class="form-control show-tick">
+                <option value="yes">TAK</option>
+                <option value="no">NIE</option>
+            </select>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-sm btn-primary rounded">DALEJ</button>

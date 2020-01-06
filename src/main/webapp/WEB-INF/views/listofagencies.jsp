@@ -19,8 +19,13 @@
     <h3><img src="<c:url value="/img/${bank.logo}" />" width="150" height="70" alt="${bank.bankName}"/> - lista oddziałów</h3>
 
     <div class="float-right">
-        <form action="${pageContext.request.contextPath}/listOfAgencies?bankId=${bank.id}" method="post">
-            <p>Wyszukaj wg miasta: <input type="text" name="city" /> <input type="submit" value="SZUKAJ" class="btn btn-sm btn-primary rounded" /></p>
+        <form action="${pageContext.request.contextPath}/listOfAgencies" method="post">
+            <input type="hidden" name="bankId" value="${bank.id}" />
+            <input type="hidden" name="amount" value="${amount}" />
+            <input type="hidden" name="creditPeriod" value="${creditPeriod}" />
+            <p>Wyszukaj wg miasta:
+                <label><input type="text" name="city" /></label>
+                <label><input type="submit" value="SZUKAJ" class="btn btn-sm btn-primary rounded" /></label></p>
         </form>
     </div>
     <div>
@@ -46,7 +51,7 @@
             <tr style="font-size: 12px"><td>${agency.agencyName}</td><td>${agency.street} ${agency.streetNumber}</td>
                 <td>${agency.zipCode} ${agency.city}</td><td>${agency.phone}</td>
                 <td>${agency.email}</td><td>${agency.hours}</td>
-            <td><a href="${pageContext.request.contextPath}/agencyContactForm?agencyId=${agency.id}&amount=${amount}&creditperiod=${creditperiod}" class="btn btn-sm btn-outline-info rounded">Formularz kontaktowy</a></td></tr>
+            <td><a href="${pageContext.request.contextPath}/agencyContactForm?agencyId=${agency.id}&amount=${amount}&creditPeriod=${creditPeriod}" class="btn btn-sm btn-outline-info rounded">Formularz kontaktowy</a></td></tr>
         </c:forEach>
     </table>
             </c:otherwise>

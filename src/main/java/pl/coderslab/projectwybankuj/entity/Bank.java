@@ -15,7 +15,7 @@ public class Bank {
     private Long id;
 
     @NotEmpty
-    @Size(min = 3, max = 50, message = "Wprowadzona wartość może mieć od 3 do 50 znaków")
+    @Size(min = 3, max = 50)
     private String bankName;
 
     private String logo;
@@ -28,6 +28,9 @@ public class Bank {
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
     private List<Mortgage> mortgages = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
+//    private List<Logo> logos = new ArrayList<>();
 
     public Bank() {
     }
@@ -84,4 +87,12 @@ public class Bank {
     public void setMortgages(List<Mortgage> mortgages) {
         this.mortgages = mortgages;
     }
+
+//    public List<Logo> getLogos() {
+//        return logos;
+//    }
+//
+//    public void setLogos(List<Logo> logos) {
+//        this.logos = logos;
+//    }
 }
