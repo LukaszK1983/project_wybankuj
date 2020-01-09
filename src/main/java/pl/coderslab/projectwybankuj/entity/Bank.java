@@ -29,9 +29,6 @@ public class Bank {
     @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
     private List<Mortgage> mortgages = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE)
-//    private List<Logo> logos = new ArrayList<>();
-
     public Bank() {
     }
 
@@ -87,12 +84,4 @@ public class Bank {
     public void setMortgages(List<Mortgage> mortgages) {
         this.mortgages = mortgages;
     }
-
-//    public List<Logo> getLogos() {
-//        return logos;
-//    }
-//
-//    public void setLogos(List<Logo> logos) {
-//        this.logos = logos;
-//    }
 }

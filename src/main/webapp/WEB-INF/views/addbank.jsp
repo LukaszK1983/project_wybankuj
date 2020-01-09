@@ -17,10 +17,12 @@
     <h3>Dodawanie nowego banku</h3>
 
     <table class="table">
-        <form:form method="post" modelAttribute="bank">
+        <form:form method="post" modelAttribute="bank" enctype="multipart/form-data">
             <tr><td>Nazwa: </td><td><form:input path="bankName" /></td>
                 <td><form:errors path="bankName" style="color: red" /></td></tr>
-            <tr><td>Logo - nazwa: </td><td><form:input path="logo" /></td><td></td></tr>
+            <tr><td>Logo: </td>
+                <td><label class="btn btn-primary" for="my-file-selector">
+                    <input id="my-file-selector" type="file" name="file" class="d-none">Wybierz plik</label></td></tr>
             <tr><td></td><td><input type="submit" value="ZAPISZ" class="btn btn-sm btn-outline-success rounded" /></td><td></td></tr>
         </form:form>
     </table>

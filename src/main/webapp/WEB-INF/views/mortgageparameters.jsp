@@ -38,7 +38,7 @@
             <div class="invalid-feedback" id="validcreditperiod">Wprowadzono błędne dane</div>
         </div>
         <div class="form-group">
-            <input type="hidden" class="form-control" id="formcontribution" placeholder="Wprowadź % posiadanego wkładu własnego, min. 10" name="contributionPercent" value="">
+            <input type="hidden" class="form-control" id="formcontribution" name="contributionPercent" value="">
         </div>
         <div class="form-group">
             <label for="formage">Wiek:</label>

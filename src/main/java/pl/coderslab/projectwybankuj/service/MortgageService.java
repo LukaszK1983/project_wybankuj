@@ -33,7 +33,8 @@ public class MortgageService {
 
     public BigDecimal calculateChoosenMortgagePayment(Mortgage mortgage, int amount, int creditPeriod) {
         BigDecimal rateRatio = BigDecimal.valueOf(1).add((mortgage.getCreditRate().divide(BigDecimal.valueOf(100), CALCULATE_SCALE, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), CALCULATE_SCALE, RoundingMode.CEILING));
-        BigDecimal payment = BigDecimal.valueOf(amount).multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), CALCULATE_SCALE, RoundingMode.CEILING));
+        BigDecimal totalAmount = BigDecimal.valueOf(amount).add(BigDecimal.valueOf(amount).multiply(mortgage.getServiceCharge().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING))).add(BigDecimal.valueOf(amount).multiply(mortgage.getInsurance().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)));
+        BigDecimal payment = totalAmount.multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), CALCULATE_SCALE, RoundingMode.CEILING));
         return payment.setScale(ROUND_SCALE, RoundingMode.HALF_UP);
     }
 

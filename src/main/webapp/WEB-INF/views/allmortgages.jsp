@@ -31,11 +31,11 @@
             <th>Max wiek</th>
             <th>Max okres</th>
             <th style="text-align: center">Akcje</th>
-            <th id="headaction"></th>
+            <th></th>
         </tr>
         </thead>
         <c:forEach var="mortgage" items="${mortgages}">
-            <tr id="rows" style="font-size: 10px">
+            <tr style="font-size: 10px">
                 <td>${mortgage.offer}</td>
                 <td>${mortgage.creditRate}%</td>
                 <td>${mortgage.serviceCharge}%</td>
@@ -48,6 +48,7 @@
                 <td>${mortgage.maxCreditPeriod} mies.</td>
                 <td style="text-align: center"><a href="${pageContext.request.contextPath}/mortgage/edit?id=${mortgage.id}&bankId=${mortgage.bank.id}" class="btn btn-sm btn-outline-primary rounded">Edycja</a>
                     <a href="${pageContext.request.contextPath}/mortgage/delete?id=${mortgage.id}&bankId=${mortgage.bank.id}" class="btn btn-sm btn-outline-danger rounded" id="remove">Usuń</a></td>
+                <td></td>
             </tr>
         </c:forEach>
         <tr>

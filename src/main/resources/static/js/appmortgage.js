@@ -26,8 +26,7 @@ $(document).ready(function () {
             costElement.css('border', '1px solid #C24754');
             costElement.css('box-shadow', '0 0 10px 1px #C24754');
             testCost = false;
-        }
-        else {
+        } else {
             costElement.css('border', '1px solid green');
             costElement.css('box-shadow', '0 0 0 0');
             testCost = true;
@@ -52,8 +51,7 @@ $(document).ready(function () {
             amountElement.css('border', '1px solid #C24754');
             amountElement.css('box-shadow', '0 0 10px 1px #C24754');
             testAmount = false;
-        }
-        else {
+        } else {
             amountElement.css('border', '1px solid green');
             amountElement.css('box-shadow', '0 0 0 0');
             testAmount = true;
@@ -99,12 +97,13 @@ $(document).ready(function () {
         }
 
         const contributionElement = $('#formcontribution');
-        contributionElement.val((cost - amount) / cost * 100);
+        contributionElement.val(Math.round(((cost - amount) / cost * 100) * 100) / 100);
 
         if (testCost === true && testAmount === true && testCreditPeriod === true && testAge === true) {
             form.submit();
         }
     }
+
     button.on('click', function (e) {
         e.preventDefault();
         check();

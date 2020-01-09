@@ -23,22 +23,19 @@
                 <th>Logo</th>
                 <th>Nazwa</th>
                 <th style="text-align: center">Akcje</th>
-                <th id="headaction"></th>
+                <th></th>
             </tr>
         </thead>
         <c:forEach var="bank" items="${banks}">
-            <tr id="rows">
+            <tr>
                 <td><img src="<c:url value="/img/${bank.logo}" />" width="70" height="40" alt="${bank.bankName}"/></td>
                 <td>${bank.bankName}</td>
                 <td style="text-align: center"><a href="${pageContext.request.contextPath}/agency?bankId=${bank.id}" class="btn btn-sm btn-outline-primary rounded">Lista Oddziałów</a>
                 <a href="${pageContext.request.contextPath}/loan?bankId=${bank.id}" class="btn btn-sm btn-outline-primary rounded">Oferty gotówkowe</a>
                 <a href="${pageContext.request.contextPath}/mortgage?bankId=${bank.id}" class="btn btn-sm btn-outline-primary rounded">Oferty hipoteczne</a>
                 <a href="${pageContext.request.contextPath}/bank/edit?id=${bank.id}" class="btn btn-sm btn-outline-primary rounded">Edycja</a>
-                    <a href="${pageContext.request.contextPath}/bank/logo?bankId=${bank.id}" class="btn btn-sm btn-outline-primary rounded">Logo</a>
-<%--                <a href="${pageContext.request.contextPath}/bank/delete?id=${bank.id}" class="btn btn-sm btn-outline-danger rounded" id="remove" onClick="if(confirm('Na pewno usunąć?') === false) return false;">Usuń</a>--%>
                     <a href="${pageContext.request.contextPath}/bank/delete?id=${bank.id}" class="btn btn-sm btn-outline-danger rounded" id="remove">Usuń</a></td>
-<%--                <td id="confirm">Potwierdzasz? <a href="${pageContext.request.contextPath}/bank/delete?id=${bank.id}" class="btn btn-sm btn-outline-danger rounded">TAK</a> <span id="reject" class="btn btn-sm btn-outline-success rounded">NIE</span> </td>--%>
-<%--                <td id="accept" style="display: none">Potwierdzasz? <a href="${pageContext.request.contextPath}/bank/delete?id=${bank.id}" class="btn btn-sm btn-outline-danger rounded">TAK</a> <a href="" class="btn btn-sm btn-outline-success rounded" id="reject">NIE</a></td>--%>
+                <td></td>
             </tr>
         </c:forEach>
         <tr>

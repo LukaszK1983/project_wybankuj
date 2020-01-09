@@ -27,11 +27,11 @@
             <th>E-mail</th>
             <th>Godziny otwarcia</th>
             <th style="text-align: center">Akcje</th>
-            <th id="headaction"></th>
+            <th></th>
         </tr>
         </thead>
         <c:forEach var="agency" items="${agencies}">
-            <tr  id="rows" style="font-size: 10px">
+            <tr style="font-size: 10px">
                 <td>${agency.agencyName}</td>
                 <td>${agency.street} ${agency.streetNumber}</td>
                 <td>${agency.zipCode} ${agency.city}</td>
@@ -40,6 +40,7 @@
                 <td>${agency.hours}</td>
                 <td><a href="${pageContext.request.contextPath}/agency/edit?id=${agency.id}&bankId=${agency.bank.id}" class="btn btn-sm btn-outline-primary rounded">Edycja</a>
                     <a href="${pageContext.request.contextPath}/agency/delete?id=${agency.id}&bankId=${agency.bank.id}" class="btn btn-sm btn-outline-danger rounded" id="remove">Usuń</a></td>
+                <td></td>
             </tr>
         </c:forEach>
         <tr><td></td><td></td><td></td><td></td><td></td><td></td>
