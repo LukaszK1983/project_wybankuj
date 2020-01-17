@@ -36,12 +36,12 @@
         <div class="form-group">
             <label for="formemail">E-mail:</label>
             <input type="text" class="form-control" id="formemail" placeholder="Wprowadź e-mail" name="email">
-            <div class="invalid-feedback" id="validemail">Wprowadzono błędne dane</div>
+            <div class="invalid-feedback" id="validemail">Wprowadzono błędne dane - poprawny format: mail@mail.pl</div>
         </div>
         <div class="form-group">
             <label for="formphone">Telefon:</label>
             <input type="text" class="form-control" id="formphone" placeholder="Wprowadź nr telefonu - 9 cyfr" name="phone">
-            <div class="invalid-feedback" id="validphone">Wprowadzono błędne dane</div>
+            <div class="invalid-feedback" id="validphone">Wprowadzono błędne dane - poprawny format: 000000000</div>
         </div>
         <div class="form-group">
             <label for="formmessage">Wiadomość:</label>
