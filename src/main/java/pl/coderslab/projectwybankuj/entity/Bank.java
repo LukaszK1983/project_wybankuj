@@ -37,6 +37,12 @@ public class Bank {
         this.logo = logo;
     }
 
+    public Bank(Long id, String bankName, String logo) {
+        this.id = id;
+        this.bankName = bankName;
+        this.logo = logo;
+    }
+
     public Long getId() {
         return id;
     }

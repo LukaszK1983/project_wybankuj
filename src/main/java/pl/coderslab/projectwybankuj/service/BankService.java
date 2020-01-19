@@ -67,10 +67,4 @@ public class BankService {
         String filePath = request.getSession().getServletContext().getRealPath("/img");
         return new File(filePath + "/" + logoName);
     }
-    //    public boolean checkFile(MultipartFile file) {
-//        return Objects.equals(file.getContentType(), "jpeg") ||
-//                Objects.equals(file.getContentType(), "jpg") ||
-//                Objects.equals(file.getContentType(), "bmp") ||
-//                Objects.equals(file.getContentType(), "gif");
-//    }
 }

@@ -1,7 +1,5 @@
 package pl.coderslab.projectwybankuj.web;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,19 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import pl.coderslab.projectwybankuj.entity.Bank;
-import pl.coderslab.projectwybankuj.repository.BankRepository;
 import pl.coderslab.projectwybankuj.service.BankService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 
 @Controller
 @RequestMapping("/bank")
 public class BankController {
-
-    private final static Logger logger = LogManager.getLogger(BankController.class);
 
     private final BankService bankService;
 

@@ -21,7 +21,6 @@ public class LoanServiceTest {
     @Test
     void shouldCalculateLoanPayment() {
         // given
-        Map<Loan, BigDecimal> mapToSort = new HashMap<>();
         int amount = 50000;
         int creditPeriod = 60;
         Bank bank = new Bank();
@@ -31,18 +30,7 @@ public class LoanServiceTest {
         List<Loan> loans = Arrays.asList(loan, loan2, loan3);
 
         // when
-        for (int i = 0; i < 3; i++) {
-            BigDecimal rateRatio = BigDecimal.valueOf(1).add((loans.get(i).getCreditRate().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 10, RoundingMode.CEILING));
-            BigDecimal totalAmount = BigDecimal.valueOf(amount).add(BigDecimal.valueOf(amount).multiply(loans.get(i).getServiceCharge().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING))).add(BigDecimal.valueOf(amount).multiply(loans.get(i).getInsurance().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)));
-            BigDecimal payment = totalAmount.multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), 10, RoundingMode.CEILING));
-            mapToSort.put(loans.get(i), payment.setScale(2, RoundingMode.HALF_UP));
-        }
-
-        Map<Loan, BigDecimal> sortedMap =
-                mapToSort.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue())
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                                (e1, e2) -> e1, LinkedHashMap::new));
+        Map<Loan, BigDecimal> sortedMap = shouldCalculatePaymentAndSortList(loans, amount, creditPeriod);
 
         // then
         Map<Loan, BigDecimal> resultMap = new HashMap<>();
@@ -62,9 +50,7 @@ public class LoanServiceTest {
         int creditPeriod = 60;
 
         // when
-        BigDecimal rateRatio = BigDecimal.valueOf(1).add((loan.getCreditRate().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 10, RoundingMode.CEILING));
-        BigDecimal totalAmount = BigDecimal.valueOf(amount).add(BigDecimal.valueOf(amount).multiply(loan.getServiceCharge().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING))).add(BigDecimal.valueOf(amount).multiply(loan.getInsurance().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)));
-        BigDecimal payment = totalAmount.multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), 10, RoundingMode.CEILING));
+        BigDecimal payment = shouldCalculatePayment(loan, amount, creditPeriod);
 
         // then
         assertEquals(BigDecimal.valueOf(1013.58), payment.setScale(2, RoundingMode.HALF_UP));
@@ -190,5 +176,26 @@ public class LoanServiceTest {
 
         // then
         Mockito.verify(loanRepositoryMock).findAllByParameters(amount, creditPeriod, age);
+    }
+
+    private Map<Loan, BigDecimal> shouldCalculatePaymentAndSortList(List<Loan> loans, int amount, int creditPeriod) {
+        Map<Loan, BigDecimal> mapToSort = new HashMap<>();
+        for (Loan loan : loans) {
+            BigDecimal rateRatio = BigDecimal.valueOf(1).add((loan.getCreditRate().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 10, RoundingMode.CEILING));
+            BigDecimal totalAmount = BigDecimal.valueOf(amount).add(BigDecimal.valueOf(amount).multiply(loan.getServiceCharge().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING))).add(BigDecimal.valueOf(amount).multiply(loan.getInsurance().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)));
+            BigDecimal payment = totalAmount.multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), 10, RoundingMode.CEILING));
+            mapToSort.put(loan, payment.setScale(2, RoundingMode.HALF_UP));
+        }
+
+        return mapToSort.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
+    }
+
+    private BigDecimal shouldCalculatePayment(Loan loan, int amount, int creditPeriod) {
+        BigDecimal rateRatio = BigDecimal.valueOf(1).add((loan.getCreditRate().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)).divide(BigDecimal.valueOf(12), 10, RoundingMode.CEILING));
+        BigDecimal totalAmount = BigDecimal.valueOf(amount).add(BigDecimal.valueOf(amount).multiply(loan.getServiceCharge().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING))).add(BigDecimal.valueOf(amount).multiply(loan.getInsurance().divide(BigDecimal.valueOf(100), 10, RoundingMode.CEILING)));
+        return totalAmount.multiply(rateRatio.pow(creditPeriod)).multiply((rateRatio.subtract(BigDecimal.valueOf(1))).divide((rateRatio.pow(creditPeriod)).subtract(BigDecimal.valueOf(1)), 10, RoundingMode.CEILING));
     }
 }
