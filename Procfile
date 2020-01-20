@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/*
+web: java -jar target/project-wybankuj-0.0.1-SNAPSHOT.jar
