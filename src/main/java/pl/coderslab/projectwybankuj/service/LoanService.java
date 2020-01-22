@@ -1,5 +1,8 @@
 package pl.coderslab.projectwybankuj.service;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import org.springframework.stereotype.Service;
 import pl.coderslab.projectwybankuj.entity.Loan;
 import pl.coderslab.projectwybankuj.repository.LoanRepository;
@@ -82,5 +85,18 @@ public class LoanService {
             loans = loanRepository.findAllByParameters(amount, creditPeriod, age);
         }
         return loans;
+    }
+
+    public void addTableHeader(PdfPTable table) {
+        PdfPCell header = new PdfPCell();
+        header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        header.setBorderWidth(2);
+        table.addCell(header);
+    }
+
+    public void addTableCell(PdfPTable table) {
+        table.addCell("Row1, Cell1");
+        table.addCell("Row1, Cell2");
+        table.addCell("Row1, Cell3");
     }
 }

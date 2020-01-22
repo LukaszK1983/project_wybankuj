@@ -45,15 +45,15 @@ public class BankService {
             File actualFile = makePath(logo);
             File fileToChange = makePath(logoToSet);
             actualFile.renameTo(fileToChange);
-        } else {
-            File fileToDelete = makePath(logo);
-            fileToDelete.delete();
-            String logoName = "logo" + bank.getBankName() + ".jpg";
-            File fileToUpload = makePath(logoName);
-            file.transferTo(fileToUpload);
-            bank.setLogo(logoName);
-            bankRepository.save(bank);
+            return;
         }
+        File fileToDelete = makePath(logo);
+        fileToDelete.delete();
+        String logoName = "logo" + bank.getBankName() + ".jpg";
+        File fileToUpload = makePath(logoName);
+        file.transferTo(fileToUpload);
+        bank.setLogo(logoName);
+        bankRepository.save(bank);
     }
 
     public void deleteBank(Long bankId) {
