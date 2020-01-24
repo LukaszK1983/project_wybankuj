@@ -13,14 +13,10 @@ import pl.coderslab.projectwybankuj.service.EmailService;
 
 import java.util.List;
 
-//import org.thymeleaf.TemplateEngine;
-//import org.thymeleaf.context.Context;
-
 @Controller
 public class HomeAgencyController {
 
     private final EmailService emailService;
-    //    private final TemplateEngine templateEngine;
     private final AgencyRepository agencyRepository;
     private final BankRepository bankRepository;
 
@@ -75,13 +71,6 @@ public class HomeAgencyController {
                                         @RequestParam String message, @RequestParam int amount,
                                         @RequestParam int creditPeriod, Model model) {
 
-//        Context context = new Context();
-//        context.setVariable("name", name);
-//        context.setVariable("contact", email);
-//        context.setVariable("message", message);
-//
-//        String body = templateEngine.process("message", context);
-//        emailService.send(agencyRepository.findById(agencyId).get().getEmail(), "Wiadomość z Wybankuj", body);
         String agencyMail = agencyRepository.findById(agencyId).get().getEmail();
         String title = "Wiadomość z Wybankuj.pl - " + name;
         emailService.send(agencyMail, title, message);

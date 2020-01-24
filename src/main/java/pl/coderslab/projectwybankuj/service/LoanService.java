@@ -1,14 +1,19 @@
 package pl.coderslab.projectwybankuj.service;
 
-import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 import pl.coderslab.projectwybankuj.entity.Loan;
+import pl.coderslab.projectwybankuj.entity.UserLoan;
 import pl.coderslab.projectwybankuj.repository.LoanRepository;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -85,6 +90,47 @@ public class LoanService {
             loans = loanRepository.findAllByParameters(amount, creditPeriod, age);
         }
         return loans;
+    }
+
+    public void generatePDF(Loan loan, UserLoan userLoan, BigDecimal payment,
+                            BigDecimal serviceCharge, BigDecimal insurance,
+                            BigDecimal interests, BigDecimal totalCost) throws DocumentException, FileNotFoundException {
+
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("symulacja.pdf"));
+
+        document.open();
+
+        Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 16, BaseColor.BLACK);
+        Chunk chunk = new Chunk(loan.getBank().getBankName() + " - Szczegóły oferty " + loan.getOffer(), font);
+
+        document.add(chunk);
+
+        PdfPTable table = new PdfPTable(2);
+
+        table.addCell("Bank");
+        table.addCell(loan.getBank().getBankName());
+        table.addCell("Oferta");
+        table.addCell(loan.getOffer());
+        table.addCell("Kwota");
+        table.addCell(String.format("%d zł", userLoan.getAmount()));
+        table.addCell("Okres");
+        table.addCell(String.format("%d mies.", userLoan.getCreditPeriod()));
+        table.addCell("Rata");
+        table.addCell(String.format("%.2f zł", payment));
+        table.addCell("Oprocentowanie");
+        table.addCell(String.format("%.2f", loan.getCreditRate()));
+        table.addCell("Prowizja");
+        table.addCell(String.format("%.2f zł", serviceCharge));
+        table.addCell("Ubezpieczenie");
+        table.addCell(String.format("%.2f zł", insurance));
+        table.addCell("Odsetki");
+        table.addCell(String.format("%.2f zł", interests));
+        table.addCell("Koszt całkowity");
+        table.addCell(String.format("%.2f zł", totalCost));
+
+        document.add(table);
+        document.close();
     }
 
     public void addTableHeader(PdfPTable table) {

@@ -64,12 +64,7 @@ public class MortgageService {
                         .sorted(Map.Entry.comparingByValue())
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                                 (e1, e2) -> e1, LinkedHashMap::new));
-//        BinaryOperator<List<Double>> compareFunction = (e1, e2) -> e1;
-//
-//        Map<Mortgage, Double> sortedMap =
-//                mapToSort.entrySet().stream()
-//                    .sorted(Map.Entry.comparingByValue())
-//                    .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue, compareFunction));
+
         return sortedMap;
     }
 

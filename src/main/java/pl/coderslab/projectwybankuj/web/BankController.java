@@ -63,6 +63,7 @@ public class BankController {
 
     @GetMapping("/delete")
     public String deleteBank(@RequestParam Long id) {
+        bankService.deleteLogo(bankService.findBankById(id).get().getLogo());
         bankService.deleteBank(id);
         return "redirect:/bank";
     }

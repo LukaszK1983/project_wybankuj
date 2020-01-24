@@ -57,10 +57,12 @@ public class BankService {
     }
 
     public void deleteBank(Long bankId) {
-        Bank bank = bankRepository.findById(bankId).orElseThrow();
-        File fileToDelete = makePath(bank.getLogo());
-        fileToDelete.delete();
         bankRepository.deleteById(bankId);
+    }
+
+    public void deleteLogo(String logo) {
+        File fileToDelete = makePath(logo);
+        fileToDelete.delete();
     }
 
     public File makePath(String logoName) {

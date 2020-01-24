@@ -31,6 +31,17 @@
         <tr><td>Koszt całkowity: </td><td style="font-weight: bold; color: crimson">${totalCost} zł</td></tr>
         <tr><td></td><td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${loan.bank.id}&amount=${userLoan.amount}&creditPeriod=${userLoan.creditPeriod}" class="btn btn-sm btn-outline-success rounded">Wybierz oddział do kontaktu</a></td></tr>
         <tr><td></td><td>
+            <form action="${pageContext.request.contextPath}/generateOffer" method="post" modelAttribute="userLoan">
+                <input type="hidden" name="loanId" value="${loan.id}">
+                <input type="hidden" name="amount" value="${userLoan.amount}">
+                <input type="hidden" name="creditPeriod" value="${userLoan.creditPeriod}">
+                <input type="hidden" name="age" value="${userLoan.age}">
+                <input type="hidden" name="chooseServiceCharge" value="${userLoan.chooseServiceCharge}">
+                <input type="hidden" name="chooseInsurance" value="${userLoan.chooseInsurance}">
+            <input type="submit" value="Wydruk do PDF" class="btn btn-sm btn-outline-success rounded">
+            </form>
+            </td></tr>
+        <tr><td></td><td>
             <form action="${pageContext.request.contextPath}/loanParameters" method="post" modelattribute="userLoan">
                 <input type="hidden" name="amount" value="${userLoan.amount}" />
                 <input type="hidden" name="creditPeriod" value="${userLoan.creditPeriod}" />
