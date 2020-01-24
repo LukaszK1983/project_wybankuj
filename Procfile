@@ -1,0 +1,1 @@
+web: java -jar target/project-wybankuj-0.0.1-SNAPSHOT.jar
