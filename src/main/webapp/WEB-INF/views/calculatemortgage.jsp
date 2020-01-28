@@ -51,7 +51,6 @@
                     <input type="hidden" name="chooseInsurance" value="${userMortgage.chooseInsurance}">
                     <td><input type="submit" value="Szczegóły" class="btn btn-sm btn-outline-primary rounded"></td>
                 </form>
-<%--                <td><a href="${pageContext.request.contextPath}/mortgageDetails?mortgageId=${mortgage.key.id}&amount=${amount}&creditPeriod=${creditPeriod}&contributionPercent=${contributionPercent}&chooseServiceCharge=${chooseServiceCharge}&chooseInsurance=${chooseInsurance}&age=${age}" class="btn btn-sm btn-outline-primary rounded">Szczegóły</a></td>--%>
                 <td><a href="${pageContext.request.contextPath}/listOfAgencies?bankId=${mortgage.key.bank.id}&amount=${userMortgage.amount}&creditPeriod=${userMortgage.creditPeriod}"  class="btn btn-sm btn-outline-primary rounded">Lista oddziałów</a></td></tr>
         </c:forEach>
     </table>
