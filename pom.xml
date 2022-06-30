@@ -20,7 +20,7 @@
 		<maven.compiler.target>11</maven.compiler.target>
 		<guava.version>16.0.1</guava.version>
 		<lombok.version>1.18.10</lombok.version>
-		<itext.version>5.5.10</itext.version>
+		<itext.version>5.5.12</itext.version>
 		<bouncycastle.version>1.56</bouncycastle.version>
 		<junit.version>4.12</junit.version>
 		<maven-plugin.version>3.0.1</maven-plugin.version>
